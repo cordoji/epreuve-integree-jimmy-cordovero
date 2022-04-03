@@ -1,0 +1,56 @@
+extends KinematicBody2D
+
+var velocity = Vector2(0,0)
+var coins = 0
+const SPEED = 300
+const GRAVITY = 30
+const JUMPFORCE = -900
+
+func _physics_process(delta):
+	
+	if Input.is_action_pressed("right"):
+		velocity.x = SPEED
+		$Sprite.play("Walk")
+		$Sprite.flip_h = false
+	elif Input.is_action_pressed("left"):
+		velocity.x = -SPEED
+		$Sprite.play("Walk")
+		$Sprite.flip_h = true
+	else:
+		$Sprite.play("Idle")
+		
+	if not is_on_floor():
+		$Sprite.play("Air")
+	
+	velocity.y = velocity.y + GRAVITY
+	
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = JUMPFORCE
+		$SoundJump.play()
+	
+	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	velocity.x = lerp(velocity.x, 0, 0.1)
+
+func _on_FallZone_body_entered(body):
+	get_tree().change_scene("res://Scenes/GameOver.tscn")
+
+func bounce():
+	velocity.y = JUMPFORCE * 0.5
+	
+func ouch(var enemyposx):
+	set_modulate(Color(1, 0.3, 0.3, 0.3))
+	velocity.y = JUMPFORCE * 0.4
+	
+	if position.x < enemyposx:
+		velocity.x = JUMPFORCE * 0.5
+	elif position.x > enemyposx:
+		velocity.x = JUMPFORCE * -0.5
+		
+	Input.action_release("left")
+	Input.action_release("right")
+	
+	$Timer.start()
+
+func _on_Timer_timeout():
+	get_tree().change_scene("res://Scenes/GameOver.tscn")

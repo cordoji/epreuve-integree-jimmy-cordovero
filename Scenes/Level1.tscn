@@ -1,0 +1,212 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://WorldTileSet.tres" type="TileSet" id=1]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://PassthroughTileSet.tres" type="TileSet" id=3]
+[ext_resource path="res://Assets/Kenney platfomers tiles/PNG/Backgrounds/set2_background.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Kenney platfomers tiles/PNG/Backgrounds/set2_tiles.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Coin.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/fonts/BalsamiqSans-Bold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Assets/HUD/coin_gold.png" type="Texture" id=8]
+[ext_resource path="res://Scripts/HUD.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/music/Retro Beat.ogg" type="AudioStream" id=11]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 224, 32 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 128, 32 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 192, 32 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 1088, 21 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 0.156863 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="DynamicFont" id=6]
+size = 36
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 50
+font_data = ExtResource( 7 )
+
+[node name="Level1" type="Node2D"]
+
+[node name="Tiles One Way" type="TileMap" parent="."]
+tile_set = ExtResource( 3 )
+collision_layer = 2
+collision_mask = 19
+format = 1
+tile_data = PoolIntArray( -131051, 4, 0, -131050, 5, 0, -131049, 5, 0, -131048, 5, 0, -131047, 5, 0, -131046, 6, 0, 14, 4, 0, 15, 5, 0, 16, 5, 0, 17, 6, 0, 65550, 3, 0, 65551, 3, 0, 65552, 3, 0, 65553, 3, 0, 131086, 3, 0, 131087, 3, 0, 131088, 3, 0, 131089, 3, 0, 196620, 15, 0, 196621, 5, 0, 196622, 5, 0, 196623, 5, 0, 196624, 5, 0, 196625, 5, 0, 196626, 16, 0 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Tiles One Way"]
+collision_layer = 3
+collision_mask = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tiles One Way/StaticBody2D"]
+position = Vector2( 992, 224 )
+shape = SubResource( 1 )
+one_way_collision = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Tiles One Way/StaticBody2D"]
+position = Vector2( 1024, 32 )
+shape = SubResource( 2 )
+one_way_collision = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Tiles One Way/StaticBody2D"]
+position = Vector2( 1536, -96 )
+shape = SubResource( 3 )
+
+[node name="Tiles Solid" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+collision_layer = 2
+collision_mask = 17
+format = 1
+tile_data = PoolIntArray( 131071, 3, 0, 196607, 3, 0, 131102, 26, 0, 131103, 0, 0, 131104, 0, 0, 131105, 0, 0, 131106, 0, 0, 131107, 0, 0, 131108, 0, 0, 131109, 1, 0, 262143, 3, 0, 327679, 3, 0, 393215, 3, 0, 393216, 5, 0, 393217, 5, 0, 393218, 5, 0, 393219, 5, 0, 393220, 5, 0, 393221, 5, 0, 393222, 5, 0, 393223, 5, 0, 393224, 5, 0, 393225, 5, 0, 393226, 5, 0, 393227, 5, 0, 393228, 5, 0, 393229, 5, 0, 393230, 5, 0, 393231, 5, 0, 393232, 5, 0, 393233, 5, 0, 393234, 5, 0, 393235, 5, 0, 393236, 5, 0, 393237, 5, 0, 393238, 5, 0, 393239, 5, 0, 393240, 5, 0, 393241, 5, 0, 393242, 6, 0, 458752, 3, 0, 458753, 3, 0, 458754, 3, 0, 458755, 3, 0, 458756, 3, 0, 458757, 3, 0, 458758, 3, 0, 458759, 3, 0, 458760, 3, 0, 458761, 3, 0, 458762, 3, 0, 458763, 3, 0, 458764, 3, 0, 458765, 3, 0, 458766, 3, 0, 458767, 3, 0, 458768, 3, 0, 458769, 3, 0, 458770, 3, 0, 458771, 3, 0, 458772, 3, 0, 458773, 3, 0, 458774, 3, 0, 458775, 3, 0, 458776, 3, 0, 458777, 3, 0, 458778, 3, 0, 524288, 3, 0, 524289, 3, 0, 524290, 3, 0, 524291, 3, 0, 524292, 3, 0, 524293, 3, 0, 524294, 3, 0, 524295, 3, 0, 524296, 3, 0, 524297, 3, 0, 524298, 3, 0, 524299, 3, 0, 524300, 3, 0, 524301, 3, 0, 524302, 3, 0, 524303, 3, 0, 524304, 3, 0, 524305, 3, 0, 524306, 3, 0, 524307, 3, 0, 524308, 3, 0, 524309, 3, 0, 524310, 3, 0, 524311, 3, 0, 524312, 3, 0, 524313, 3, 0, 524314, 3, 0, 589824, 3, 0, 589825, 3, 0, 589826, 3, 0, 589827, 3, 0, 589828, 3, 0, 589829, 3, 0, 589830, 3, 0, 589831, 3, 0, 589832, 3, 0, 589833, 3, 0, 589834, 3, 0, 589835, 3, 0, 589836, 3, 0, 589837, 3, 0, 589838, 3, 0, 589839, 3, 0, 589840, 3, 0, 589841, 3, 0, 589842, 3, 0, 589843, 3, 0, 589844, 3, 0, 589845, 3, 0, 589846, 3, 0, 589847, 3, 0, 589848, 3, 0, 589849, 3, 0, 589850, 3, 0 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 582, 320 )
+collision_mask = 30
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2( 0, 2 )
+current = true
+limit_left = 0
+limit_bottom = 640
+limit_smoothed = true
+drag_margin_h_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.3
+drag_margin_right = 0.3
+editor_draw_limits = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Purple Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 640, 480 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Purple Sky"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Far Blocks" type="ParallaxLayer" parent="ParallaxBackground"]
+modulate = Color( 0.964706, 0.552941, 0.552941, 1 )
+motion_scale = Vector2( 0.2, 0.2 )
+motion_mirroring = Vector2( 2080, 1560 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Far Blocks"]
+scale = Vector2( 3.25, 3.25 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="Middle Blocks" type="ParallaxLayer" parent="ParallaxBackground"]
+modulate = Color( 0.996078, 0.745098, 0.745098, 1 )
+motion_scale = Vector2( 0.4, 0.4 )
+motion_mirroring = Vector2( 1600, 1200 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Middle Blocks"]
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="Nearby Blocks" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.7, 0.7 )
+motion_mirroring = Vector2( 1120, 840 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Nearby Blocks"]
+scale = Vector2( 1.75, 1.75 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="FallZone" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FallZone"]
+position = Vector2( 2016, 672 )
+shape = SubResource( 4 )
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource( 9 )
+
+[node name="Panel" type="Panel" parent="HUD"]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 247.0
+margin_bottom = 121.0
+custom_styles/panel = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="HUD"]
+margin_left = 46.0
+margin_top = 46.0
+margin_right = 107.0
+margin_bottom = 107.0
+texture = ExtResource( 8 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="X" type="Label" parent="HUD"]
+margin_left = 119.0
+margin_top = 56.0
+margin_right = 156.0
+margin_bottom = 104.0
+custom_colors/font_color = Color( 0.898039, 0.717647, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Coins" type="Label" parent="HUD"]
+margin_left = 154.0
+margin_top = 47.0
+margin_right = 232.0
+margin_bottom = 107.0
+custom_colors/font_color = Color( 0.898039, 0.717647, 0, 1 )
+custom_fonts/font = SubResource( 7 )
+text = "##"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Coin" parent="Node2D" instance=ExtResource( 6 )]
+position = Vector2( 1984, 64 )
+
+[node name="Coin2" parent="Node2D" instance=ExtResource( 6 )]
+position = Vector2( 2368, 64 )
+
+[node name="Coin3" parent="Node2D" instance=ExtResource( 6 )]
+position = Vector2( 2176, 64 )
+
+[node name="Enemy" parent="." instance=ExtResource( 10 )]
+position = Vector2( 832, 128 )
+detects_cliffs = false
+
+[node name="Enemy2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1376, -192 )
+
+[node name="MusicLevel" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -12.0
+autoplay = true
+
+[connection signal="body_entered" from="FallZone" to="Player" method="_on_FallZone_body_entered"]
+[connection signal="coin_collected" from="Node2D/Coin" to="HUD" method="_on_coin_collected"]
+[connection signal="coin_collected" from="Node2D/Coin2" to="HUD" method="_on_coin_collected"]
+[connection signal="coin_collected" from="Node2D/Coin3" to="HUD" method="_on_coin_collected"]

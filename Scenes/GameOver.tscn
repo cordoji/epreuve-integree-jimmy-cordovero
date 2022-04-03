@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/Replay.gd" type="Script" id=1]
+[ext_resource path="res://Assets/fonts/KiriFont.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 80
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 48
+font_data = ExtResource( 2 )
+
+[node name="GameOver" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0.45098, 0.0509804, 0.117647, 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 183.0
+margin_top = 143.0
+margin_right = 904.0
+margin_bottom = 254.0
+custom_fonts/font = SubResource( 1 )
+text = "Game Over !!!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Replay" type="Button" parent="."]
+margin_left = 343.0
+margin_top = 317.0
+margin_right = 685.0
+margin_bottom = 444.0
+custom_colors/font_color_hover = Color( 0.0196078, 0.454902, 0.0313726, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Main Menu"
+flat = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Replay" to="Replay" method="_on_Replay_pressed"]
