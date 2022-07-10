@@ -11,5 +11,5 @@ func _physics_process(delta):
 func _on_coin_collected():
 	coins += 1
 	_ready()
-	if coins == 3:
+	if coins == 100:
 		get_tree().change_scene("res://Scenes/GameWon.tscn")

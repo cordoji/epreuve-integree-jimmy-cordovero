@@ -42,7 +42,7 @@ func _on_TopChecker_body_entered(body):
 	body.bounce()
 	$SoundKill.play(0.1)
 
-"""
+
 func _on_Sides_body_entered(body):
 	#print("ouch")
 	if body is RigidBody2D:
@@ -56,7 +56,7 @@ func _on_Sides_body_entered(body):
 		$SoundKill.play(0.1)
 	elif body.name == "Player":
 		body.ouch(position.x)
-"""
+
 
 func _on_Timer_timeout():
 	queue_free()
