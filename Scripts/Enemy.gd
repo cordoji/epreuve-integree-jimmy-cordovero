@@ -5,6 +5,10 @@ export var direction = -1 # 1 = right // -1 = left
 export var detects_cliffs = true
 var speed = 50
 
+var coin_scene = preload("res://Scenes/Coin.tscn")
+#var spawned
+
+
 func _ready():
 	if direction == -1:
 		$AnimatedSprite.flip_h = true
@@ -40,7 +44,18 @@ func _on_TopChecker_body_entered(body):
 	$Sides.set_collision_mask_bit(0, false)
 	$Timer.start()
 	body.bounce()
+	_spawn_item()
 	$SoundKill.play(0.1)
+
+func _spawn_item():
+	var coin = coin_scene.instance()
+	coin.set_collision_layer_bit(0, false)
+	coin.set_collision_mask_bit(0, false)
+	coin.connect("coin_collected", get_tree().root.get_node("Level1/HUD"), "_on_coin_collected")
+	get_tree().root.get_node("Level1/Node2D").call_deferred("add_child", coin)
+	coin.position = position
+	coin._spawn()
+	#spawned = coin
 
 
 func _on_Sides_body_entered(body):
@@ -52,6 +67,7 @@ func _on_Sides_body_entered(body):
 		set_collision_layer_bit(4, false)
 		set_collision_mask_bit(0, false)
 		set_collision_mask_bit(1, false)
+		
 		$Timer.start()
 		$SoundKill.play(0.1)
 	elif body.name == "Player":
@@ -60,3 +76,5 @@ func _on_Sides_body_entered(body):
 
 func _on_Timer_timeout():
 	queue_free()
+	#spawned.set_collision_layer_bit(0, true)
+	#spawned.set_collision_mask_bit(0, true)

@@ -67,7 +67,7 @@ position = Vector2( 38, 18 )
 shape = SubResource( 5 )
 
 [node name="Timer" type="Timer" parent="."]
-one_shot = true
+pause_mode = 1
 
 [node name="SoundKill" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )

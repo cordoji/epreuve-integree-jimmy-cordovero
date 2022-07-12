@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="Inventory" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 672.0
+margin_top = -992.0
+margin_right = 1504.0
+margin_bottom = -320.0
