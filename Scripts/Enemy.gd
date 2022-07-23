@@ -6,6 +6,7 @@ export var detects_cliffs = true
 var speed = 50
 
 var coin_scene = preload("res://Scenes/Coin.tscn")
+var weapon_scene = preload("res://Scenes/Weapon.tscn")
 #var spawned
 
 
@@ -47,15 +48,24 @@ func _on_TopChecker_body_entered(body):
 	_spawn_item()
 	$SoundKill.play(0.1)
 
+#func _spawn_item():
+#	var coin = coin_scene.instance()
+#	coin.set_collision_layer_bit(0, false)
+#	coin.set_collision_mask_bit(0, false)
+#	coin.connect("coin_collected", get_tree().root.get_node("Level1/HUD"), "_on_coin_collected")
+#	get_tree().root.get_node("Level1/Node2D").call_deferred("add_child", coin)
+#	coin.position = position
+#	coin._spawn()
+#	#spawned = coin
+
+	
 func _spawn_item():
-	var coin = coin_scene.instance()
-	coin.set_collision_layer_bit(0, false)
-	coin.set_collision_mask_bit(0, false)
-	coin.connect("coin_collected", get_tree().root.get_node("Level1/HUD"), "_on_coin_collected")
-	get_tree().root.get_node("Level1/Node2D").call_deferred("add_child", coin)
-	coin.position = position
-	coin._spawn()
-	#spawned = coin
+	var weapon = weapon_scene.instance()
+	weapon.set_collision_layer_bit(0, false)
+	weapon.set_collision_mask_bit(0, false)
+	get_tree().root.get_node("Level1/Node2D").call_deferred("add_child", weapon)
+	weapon.position = position
+	weapon._spawn()
 
 
 func _on_Sides_body_entered(body):

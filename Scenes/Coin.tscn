@@ -73,6 +73,7 @@ stream = ExtResource( 5 )
 volume_db = -3.0
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 
 [connection signal="body_entered" from="." to="." method="_on_Coin_body_entered"]

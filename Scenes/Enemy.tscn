@@ -11,15 +11,15 @@ extents = Vector2( 32, 45.5 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "Killed",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 3 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "Walk",
 "speed": 2.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "Killed",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=4]
@@ -41,7 +41,6 @@ shape = SubResource( 3 )
 position = Vector2( 0, 4 )
 frames = SubResource( 2 )
 animation = "Walk"
-frame = 1
 playing = true
 
 [node name="FloorChecker" type="RayCast2D" parent="."]
