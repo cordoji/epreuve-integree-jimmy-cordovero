@@ -15,9 +15,9 @@ func _ready():
 	default_style.texture = default_tex
 	empty_style.texture = empty_tex
 	
-	if randi() % 2 == 0:
-		weapon = WeaponClass.instance()
-		add_child(weapon)
+#	if randi() % 2 == 0:
+#		weapon = WeaponClass.instance()
+#		add_child(weapon)
 		#weapon.get_node("Sprite").position = Vector2(21,24)
 	
 	refresh_style()
@@ -44,3 +44,11 @@ func putIntoSlot(new_weapon):
 	add_child(weapon)
 	refresh_style()
 
+func initialize_weapon(weapon_name):
+	if weapon == null:
+		weapon = WeaponClass.instance()
+		add_child(weapon)
+		weapon.set_weapon(weapon_name)
+	else:
+		weapon.set_weapon(weapon_name)
+	refresh_style()

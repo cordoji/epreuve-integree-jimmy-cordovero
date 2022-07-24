@@ -7,6 +7,7 @@ var holding_weapon = null
 func _ready():
 	for inv_slot in inventory_slots.get_children():
 		inv_slot.connect("gui_input", self, "slot_gui_input", [inv_slot])
+	initialize_inventory()
 
 func slot_gui_input(event: InputEvent, slot: SlotClass):
 	if event is InputEventMouseButton:
@@ -26,6 +27,12 @@ func slot_gui_input(event: InputEvent, slot: SlotClass):
 				slot.pickFromSlot()
 				holding_weapon.global_position = get_global_mouse_position()
 
-func _input(event):
+func _input(_event):
 	if holding_weapon:
 		holding_weapon.global_position = get_global_mouse_position()
+
+func initialize_inventory():
+	var slots = inventory_slots.get_children()
+	for i in range(slots.size()):
+		if PlayerInventory.inventory.has(i):
+			slots[i].initialize_weapon(PlayerInventory.inventory[i][0])

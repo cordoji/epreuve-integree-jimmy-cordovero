@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://WorldTileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=9]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Assets/music/Retro Beat.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Scenes/Inventory.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scripts/UserInterface.gd" type="Script" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 224.5, 32 )
@@ -239,9 +241,17 @@ detects_cliffs = false
 position = Vector2( 1376, -192 )
 
 [node name="MusicLevel" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
 stream = ExtResource( 11 )
 volume_db = -12.0
 autoplay = true
+
+[node name="UserInterface" type="CanvasLayer" parent="."]
+pause_mode = 2
+script = ExtResource( 13 )
+
+[node name="Inventory" parent="UserInterface" instance=ExtResource( 12 )]
+visible = false
 
 [connection signal="body_entered" from="FallZone" to="Player" method="_on_FallZone_body_entered"]
 [connection signal="coin_collected" from="Node2D/Coin" to="HUD" method="_on_coin_collected"]
