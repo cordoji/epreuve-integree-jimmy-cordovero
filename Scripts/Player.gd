@@ -10,14 +10,15 @@ func _physics_process(delta):
 	
 	if Input.is_action_pressed("right"):
 		velocity.x = SPEED
-		$Sprite.play("Walk")
-		$Sprite.flip_h = false
+		$Sprites/AnimationPlayer.play("Walk_right")
+		$Sprites/Body.flip_h = false
+		$Sprites/Weapon.flip_h = false
 	elif Input.is_action_pressed("left"):
 		velocity.x = -SPEED
-		$Sprite.play("Walk")
+		$Sprites/AnimationPlayer.play("Walk_left")
 		$Sprite.flip_h = true
 	else:
-		$Sprite.play("Idle")
+		$Sprites/AnimationPlayer.play("Idle")
 		
 	if not is_on_floor():
 		$Sprite.play("Air")
@@ -27,6 +28,14 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMPFORCE
 		$SoundJump.play()
+		
+	if Input.is_action_pressed("shoot") and get_global_mouse_position().x > global_position.x:
+		$Sprites/AnimationPlayer.play("Shoot_right")
+	
+	if Input.is_action_pressed("shoot") and get_global_mouse_position().x < global_position.x:
+		$Sprites/AnimationPlayer.play("Shoot_left")
+	
+	
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
