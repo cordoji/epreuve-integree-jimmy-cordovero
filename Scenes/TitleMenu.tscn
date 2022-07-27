@@ -60,9 +60,6 @@ custom_colors/font_color = Color( 0.160784, 0.701961, 0.270588, 1 )
 custom_colors/font_outline_modulate = Color( 0.780392, 0.0784314, 0.0784314, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "Platformer Game!"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Left Panel" type="Panel" parent="."]
 margin_left = 32.0

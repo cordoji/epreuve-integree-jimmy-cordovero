@@ -20,7 +20,7 @@ func _spawn():
 	get_node("Sprite").visible = true
 	get_node("Sprite").scale = Vector2(2,2)
 	#get_node("TextureRect").rect_position = Vector2(-70,-70)
-	$Timer.start()
+	#$Timer.start()
 
 
 func _on_Timer_timeout():

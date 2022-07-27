@@ -43,7 +43,7 @@ func _on_TopChecker_body_entered(body):
 	$TopChecker.set_collision_mask_bit(0, false)
 	$Sides.set_collision_layer_bit(4, false)
 	$Sides.set_collision_mask_bit(0, false)
-	$Timer.start()
+	#$Timer.start()
 	body.bounce()
 	_spawn_item()
 	$SoundKill.play(0.1)
@@ -78,7 +78,7 @@ func _on_Sides_body_entered(body):
 		set_collision_mask_bit(0, false)
 		set_collision_mask_bit(1, false)
 		
-		$Timer.start()
+		#$Timer.start()
 		$SoundKill.play(0.1)
 	elif body.name == "Player":
 		body.ouch(position.x)

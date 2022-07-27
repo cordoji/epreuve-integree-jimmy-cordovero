@@ -6,6 +6,9 @@ const SPEED = 300
 const GRAVITY = 30
 const JUMPFORCE = -900
 
+func _ready():
+	PlayerInventory.connect("active_weapon_updated", self, "refresh_displayed_weapon")
+
 func _physics_process(delta):
 	
 	if Input.is_action_pressed("right"):
@@ -21,7 +24,10 @@ func _physics_process(delta):
 		$Sprites/AnimationPlayer.play("Idle")
 		
 	if not is_on_floor():
-		$Sprite.play("Air")
+		if Input.is_action_pressed("left"):
+			$Sprites/AnimationPlayer.play("Air_left")
+		else:
+			$Sprites/AnimationPlayer.play("Air_right")
 	
 	velocity.y = velocity.y + GRAVITY
 	
@@ -63,3 +69,9 @@ func ouch(var enemyposx):
 
 func _on_Timer_timeout():
 	get_tree().change_scene("res://Scenes/GameOver.tscn")
+
+func refresh_displayed_weapon():
+	if PlayerInventory.equips.has(PlayerInventory.active_weapon_slot) != false:
+		$Sprites/Weapon.texture = load("res://Assets/Request pack (100 assets)/PNG/" + PlayerInventory.equips[PlayerInventory.active_weapon_slot][0] + ".png")
+	else:
+		$Sprites/Weapon.texture = null
