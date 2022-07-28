@@ -58,11 +58,11 @@ func putIntoSlot(new_weapon):
 	add_child(weapon)
 	refresh_style()
 
-func initialize_weapon(weapon_name):
+func initialize_weapon(w):
 	if weapon == null:
 		weapon = WeaponClass.instance()
 		add_child(weapon)
-		weapon.set_weapon(weapon_name)
+		weapon.set_weapon(w)
 	else:
-		weapon.set_weapon(weapon_name)
+		weapon.set_weapon(w)
 	refresh_style()

@@ -4,6 +4,7 @@ func _input(event):
 	if event.is_action_pressed("inventory"):
 		$Inventory.visible = !$Inventory.visible
 		$Inventory.initialize_inventory()
+		$Inventory.initialize_equips()
 		get_tree().paused = !get_tree().paused
 		
 	if event.is_action_pressed("scroll_up"):

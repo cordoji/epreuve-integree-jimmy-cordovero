@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+var projectile_scene = preload("res://Scenes/Projectile.tscn")
+
 var velocity = Vector2(0,0)
 var coins = 0
 const SPEED = 300
@@ -15,7 +17,7 @@ func _physics_process(delta):
 		velocity.x = SPEED
 		$Sprites/AnimationPlayer.play("Walk_right")
 		$Sprites/Body.flip_h = false
-		$Sprites/Weapon.flip_h = false
+#		$Sprites/Weapon.flip_h = false
 	elif Input.is_action_pressed("left"):
 		velocity.x = -SPEED
 		$Sprites/AnimationPlayer.play("Walk_left")
@@ -46,6 +48,28 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	velocity.x = lerp(velocity.x, 0, 0.1)
+	
+	if Input.is_action_pressed("shoot"):
+		shoot()
+
+func shoot():
+	var origin = Vector2(self.global_position.x + 15, self.global_position.y + 15)
+	if PlayerInventory.equips.has(PlayerInventory.active_weapon_slot) != false:
+#		print("self.get_children()")
+		PlayerInventory.current_weapon.fire(Vector2(origin.x + 20, origin.y +10), get_global_mouse_position())
+	else:
+		throw_rock(origin, get_global_mouse_position())
+
+func throw_rock(origin, direction):
+	if $RockTimer.is_stopped():
+		var projectile = projectile_scene.instance()
+		projectile.SPEED = projectile.SPEED / 2
+		get_tree().current_scene.add_child(projectile)
+		projectile.global_position = origin
+		var projectile_rotation = self.global_position.direction_to(direction).angle()
+		projectile.rotation = projectile_rotation
+		projectile.get_node("Sprite").texture = load("res://Assets/Request pack (100 assets)/PNG/dirtCaveRockSmall.png")
+		$RockTimer.start()
 
 func _on_FallZone_body_entered(body):
 	get_tree().change_scene("res://Scenes/GameOver.tscn")
@@ -72,6 +96,6 @@ func _on_Timer_timeout():
 
 func refresh_displayed_weapon():
 	if PlayerInventory.equips.has(PlayerInventory.active_weapon_slot) != false:
-		$Sprites/Weapon.texture = load("res://Assets/Request pack (100 assets)/PNG/" + PlayerInventory.equips[PlayerInventory.active_weapon_slot][0] + ".png")
+		$Sprites/WeaponSprite.texture = load("res://Assets/Request pack (100 assets)/PNG/" + PlayerInventory.current_weapon.weapon_name + ".png")
 	else:
-		$Sprites/Weapon.texture = null
+		$Sprites/WeaponSprite.texture = null
