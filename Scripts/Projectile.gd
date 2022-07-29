@@ -19,5 +19,16 @@ func _physics_process(delta):
 func destroy():
 	queue_free()
 
-func bounce():
+func hit():
+	SPEED = 0
+	$Sprite.visible = false
+	$OnHit.play("Burst")
+#	destroy()
+
+
+func _on_OnHit_animation_finished(anim_name):
+	destroy()
+
+
+func _on_Timer_timeout():
 	destroy()

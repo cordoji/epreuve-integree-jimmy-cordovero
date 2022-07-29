@@ -66,7 +66,7 @@ scroll_down={
 2d_physics/layer_3="FallZone"
 2d_physics/layer_4="Item"
 2d_physics/layer_5="Enemy"
-2d_physics/layer_6="Bullets"
+2d_physics/layer_6="Projectile"
 2d_physics/layer_7="Spawned Item"
 
 [physics]

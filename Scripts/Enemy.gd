@@ -36,12 +36,9 @@ func stop_collisions():
 	set_collision_mask_bit(0, false)
 	set_collision_mask_bit(1, false)
 	set_collision_mask_bit(5, false)
-	$TopChecker.set_collision_layer_bit(4, false)
-	$TopChecker.set_collision_mask_bit(0, false)
-	$TopChecker.set_collision_mask_bit(5, false)
-	$Sides.set_collision_layer_bit(4, false)
-	$Sides.set_collision_mask_bit(0, false)
-	$Sides.set_collision_mask_bit(5, false)
+	$HitBox.set_collision_layer_bit(4, false)
+	$HitBox.set_collision_mask_bit(0, false)
+	$HitBox.set_collision_mask_bit(5, false)
 
 func _spawn_item():
 	var weapon = weapon_scene.instance()
@@ -51,31 +48,32 @@ func _spawn_item():
 	weapon.position = position
 	weapon._spawn()
 
-func _on_TopChecker_body_entered(body):
-	$AnimatedSprite.play("Killed")
-	speed = 0
-	stop_collisions()
-	#$Timer.start()
-	body.bounce()
-	_spawn_item()
-	$SoundKill.play(0.1)
-
-func _on_Sides_body_entered(body):
-	#print("ouch")
-	if body is KinematicBody2D:
+func _on_HitBox_body_entered(body):
+	if body.name == "Projectile":
 		$AnimatedSprite.play("Killed")
 		speed = 0
 		stop_collisions()
+		body.hit()
 		_spawn_item()
-		body.bounce()
-		#$Timer.start()
 		$SoundKill.play(0.1)
-	elif body.name == "Player":
-		body.ouch(position.x)
-	elif body.name == "Projectile":
-		body.destroy()
+
+#func _on_Sides_body_entered(body):
+#	#print("ouch")
+#	if body is KinematicBody2D:
+#		$AnimatedSprite.play("Killed")
+#		speed = 0
+#		stop_collisions()
+#		_spawn_item()
+#		body.hit()
+#		#$Timer.start()
+#		$SoundKill.play(0.1)
+#	elif body.name == "Player":
+#		body.ouch(position.x)
+#	elif body.name == "Projectile":
+#		body.destroy()
 
 func _on_Timer_timeout():
 	queue_free()
 	#spawned.set_collision_layer_bit(0, true)
 	#spawned.set_collision_mask_bit(0, true)
+
