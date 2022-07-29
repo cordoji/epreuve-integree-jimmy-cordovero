@@ -64,6 +64,7 @@ func throw_rock(origin, direction):
 	if $RockTimer.is_stopped():
 		var projectile = projectile_scene.instance()
 		projectile.SPEED = projectile.SPEED / 2
+		projectile.GRAVITY = 15
 		get_tree().current_scene.add_child(projectile)
 		projectile.global_position = origin
 		var projectile_rotation = self.global_position.direction_to(direction).angle()
