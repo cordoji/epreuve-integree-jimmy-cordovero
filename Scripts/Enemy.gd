@@ -5,12 +5,16 @@ export var direction = -1 # 1 = right // -1 = left
 export var detects_cliffs = true
 var speed = 50
 
+var base_health = 100
+onready var health = base_health
+
 var coin_scene = preload("res://Scenes/Coin.tscn")
 var weapon_scene = preload("res://Scenes/Weapon.tscn")
 #var spawned
 
 
 func _ready():
+	$HealthBar/ProgressBar.max_value = base_health
 	if direction == -1:
 		$AnimatedSprite.flip_h = true
 	$FloorChecker.position.x = $CollisionShape2D.shape.get_extents().x * direction
@@ -23,6 +27,8 @@ func _physics_process(delta):
 		direction *= -1
 		$AnimatedSprite.flip_h = not $AnimatedSprite.flip_h
 		$FloorChecker.position.x = $CollisionShape2D.shape.get_extents().x * direction
+		
+	
 	
 	velocity.y += 20
 	
@@ -49,13 +55,22 @@ func _spawn_item():
 	weapon._spawn()
 
 func _on_HitBox_body_entered(body):
-	if body.name == "Projectile":
-		$AnimatedSprite.play("Killed")
-		speed = 0
-		stop_collisions()
+	if body is KinematicBody2D:
+		health -= body.damage
+		$HealthBar/ProgressBar.value = health
+		
+		if $HealthBar/ProgressBar.value != $HealthBar/ProgressBar.max_value:
+			$HealthBar.visible = true
+		else:
+			$HealthBar.visible = false
+		
 		body.hit()
-		_spawn_item()
-		$SoundKill.play(0.1)
+		if health <= 0:
+			$AnimatedSprite.play("Killed")
+			speed = 0
+			stop_collisions()
+			_spawn_item()
+			$SoundKill.play(0.1)
 
 #func _on_Sides_body_entered(body):
 #	#print("ouch")

@@ -3,7 +3,7 @@
 [ext_resource path="res://Scripts/Projectile.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Request pack (100 assets)/PNG/laserRedBurst.png" type="Texture" id=2]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=4]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Burst"
@@ -92,7 +92,7 @@ script = ExtResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="HitEffect" type="Sprite" parent="."]
 scale = Vector2( 0.1, 0.1 )
