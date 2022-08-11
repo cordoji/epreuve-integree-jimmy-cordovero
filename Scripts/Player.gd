@@ -66,6 +66,7 @@ func throw_rock(origin, direction):
 		projectile.SPEED = projectile.SPEED / 2
 		projectile.GRAVITY = 15
 		projectile.damage = 30
+		projectile.get_node("Sound").stream = null
 		get_tree().current_scene.add_child(projectile)
 		projectile.global_position = origin
 		var projectile_rotation = self.global_position.direction_to(direction).angle()

@@ -31,7 +31,7 @@ func _spawn():
 	set_collision_mask_bit(0, true)
 
 func _on_AnimationPlayer_animation_finished(_anim_name):
-	get_tree().root.get_node("Level1/Node2D").call_deferred("remove_child", self)
+	get_tree().root.get_node("Level1/Enemies").call_deferred("remove_child", self)
 
 func set_weapon(w):
 	$TextureRect.texture = load("res://Assets/Request pack (100 assets)/PNG/" +  w.weapon_name + ".png")

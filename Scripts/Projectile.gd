@@ -25,7 +25,8 @@ func hit():
 	set_collision_layer_bit(5, false)
 	SPEED = 0
 	$Sprite.visible = false
-	$OnHit.play("Burst")
+	if $Sprite.texture == load("res://Assets/Request pack (100 assets)/PNG/laserRedHorizontal.png"):
+		$OnHit.play("Burst")
 #	destroy()
 
 
@@ -35,3 +36,4 @@ func _on_OnHit_animation_finished(anim_name):
 
 func _on_Timer_timeout():
 	destroy()
+
