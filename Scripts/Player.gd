@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 var projectile_scene = preload("res://Scenes/Projectile.tscn")
 
+var startPosition = Vector2(0,0)
 var velocity = Vector2(0,0)
 var coins = 0
 const SPEED = 300
@@ -10,6 +11,7 @@ const JUMPFORCE = -900
 
 func _ready():
 	PlayerInventory.connect("active_weapon_updated", self, "refresh_displayed_weapon")
+	startPosition = self.position
 
 func _physics_process(delta):
 	
@@ -75,11 +77,16 @@ func throw_rock(origin, direction):
 		$RockTimer.start()
 
 func _on_FallZone_body_entered(body):
-	get_tree().change_scene("res://Scenes/GameOver.tscn")
+#	get_tree().change_scene("res://Scenes/GameOver.tscn")
+#	var currentScene = get_tree().root.get_node("Master").current_scene
+#	get_tree().root.get_node("Master/CurrentScene").call_deferred("remove_child", currentScene)
+#	get_tree().root.get_node("Master/CurrentScene").call_deferred("add_child", currentScene)
+	self.position = startPosition
+	
 
 func bounce():
 	velocity.y = JUMPFORCE * 0.5
-	
+
 func ouch(var enemyposx):
 	set_modulate(Color(1, 0.3, 0.3, 0.3))
 	velocity.y = JUMPFORCE * 0.4

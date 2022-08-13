@@ -1,6 +1,7 @@
 extends Area2D
 
 export(PackedScene) var target_scene
+#var level1_scene = preload("res://Scenes/Level1.tscn")
 
 var open = false
 
@@ -13,8 +14,12 @@ func _input(event):
 		next_level()
 
 func next_level():
-	var ERR = get_tree().change_scene_to(target_scene)
-	
+	var currentScene = get_tree().root.get_node("Master").current_scene
+	get_tree().root.get_node("Master/CurrentScene").call_deferred("remove_child", currentScene)
+	var ERR = get_tree().root.get_node("Master/CurrentScene").call_deferred("add_child", target_scene.instance())
+	get_tree().root.get_node("Master").current_scene = target_scene
+#	var ERR = get_tree().change_scene_to(target_scene.instance())
+
 	if ERR != OK:
 		print("something failed in the door scene")
 
@@ -24,8 +29,16 @@ func next_level():
 
 
 func _on_Portal_body_entered(body):
-	open = true
+	if body is KinematicBody2D:
+		open = true
 
 
 func _on_Portal_body_exited(body):
-	open = false
+	if body is KinematicBody2D:
+		open = false
+
+
+static func _delete_children(node):
+	for n in node.get_children():
+		node.remove_child(n)
+		n.queue_free()

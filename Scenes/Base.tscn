@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/Base_tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://Tilesets/Base_tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://Assets/Base pack (360 assets)/PNG/Tiles/door_closedMid.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Base pack (360 assets)/PNG/Tiles/door_closedTop.png" type="Texture" id=4]
 

@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="TFE"
-run/main_scene="res://Scenes/TitleMenu.tscn"
+run/main_scene="res://Scenes/Master.tscn"
 config/icon="res://icon.png"
 
 [autoload]

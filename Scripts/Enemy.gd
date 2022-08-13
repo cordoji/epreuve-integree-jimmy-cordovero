@@ -50,7 +50,7 @@ func _spawn_item():
 	var weapon = weapon_scene.instance()
 	weapon.set_collision_layer_bit(0, false)
 	weapon.set_collision_mask_bit(0, false)
-	get_tree().root.get_node("Level1/Enemies").call_deferred("add_child", weapon)
+	get_tree().root.get_node("Master/CurrentScene/Level1/Enemies").call_deferred("add_child", weapon)
 	weapon.position = position
 	weapon._spawn()
 
