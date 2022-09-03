@@ -60,8 +60,13 @@ func putIntoSlot(new_weapon):
 
 func initialize_weapon(w):
 	if weapon == null:
-		weapon = WeaponClass.instance()
+		weapon = w
+		weapon.position = Vector2(0,0)
+#		weapon.z_index = 1
+#		weapon.get_node("TextureRect").visible = true
 		add_child(weapon)
+		print(weapon.position)
+#		print(weapon.get_node("TextureRect").visible)
 		weapon.set_weapon(w)
 	else:
 		weapon.set_weapon(w)

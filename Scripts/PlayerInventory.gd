@@ -18,6 +18,7 @@ func add_weapon(weapon: WeaponClass):
 	for i in range(NUM_INVENTORY_SLOTS):
 		if inventory.has(i) == false:
 			inventory[i] = [weapon]
+#			print(i)
 			return
 
 func remove_weapon(slot: SlotClass):

@@ -5,6 +5,11 @@ export(PackedScene) var target_scene
 
 var open = false
 
+func ready():
+	if target_scene == null:
+		generate_level()
+		
+
 func _input(event):
 	if event.is_action_pressed("ui_accept") and open:
 		if !target_scene:
@@ -42,3 +47,7 @@ static func _delete_children(node):
 	for n in node.get_children():
 		node.remove_child(n)
 		n.queue_free()
+
+func generate_level():
+#	target_scene = ...
+	pass

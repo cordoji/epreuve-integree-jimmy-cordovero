@@ -1,6 +1,8 @@
 extends Node2D
 
 var titleMenu_scene = preload("res://Scenes/TitleMenu.tscn")
+
+
 var current_scene
 
 func _ready():

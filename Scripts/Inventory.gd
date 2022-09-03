@@ -18,8 +18,8 @@ func _ready():
 		equip_slots[i].slot_index = i
 		equip_slots[i].slotType = SlotClass.SlotType.WEAPON
 		
-	initialize_inventory()
-	initialize_equips()
+#	initialize_inventory()
+#	initialize_equips()
 
 func slot_gui_input(event: InputEvent, slot: SlotClass):
 	if event is InputEventMouseButton:
