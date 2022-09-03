@@ -65,16 +65,22 @@ func shoot():
 func throw_rock(origin, direction):
 	if $RockTimer.is_stopped():
 		var projectile = projectile_scene.instance()
-		projectile.SPEED = projectile.SPEED / 2
-		projectile.GRAVITY = 15
-		projectile.damage = 30
-		projectile.get_node("Sound").stream = null
-		get_tree().current_scene.add_child(projectile)
-		projectile.global_position = origin
-		var projectile_rotation = self.global_position.direction_to(direction).angle()
-		projectile.rotation = projectile_rotation
-		projectile.get_node("Sprite").texture = load("res://Assets/Request pack (100 assets)/PNG/dirtCaveRockSmall.png")
+		rock_stats(projectile)
+		rock_in_scene(projectile, origin, direction)
 		$RockTimer.start()
+
+func rock_stats(projectile):
+	projectile.SPEED = projectile.SPEED / 2
+	projectile.GRAVITY = 15
+	projectile.damage = 30
+
+func rock_in_scene(projectile, origin, direction):
+	projectile.get_node("Sound").stream = null
+	get_tree().current_scene.add_child(projectile)
+	projectile.global_position = origin
+	var projectile_rotation = self.global_position.direction_to(direction).angle()
+	projectile.rotation = projectile_rotation
+	projectile.get_node("Sprite").texture = load("res://Assets/Request pack (100 assets)/PNG/dirtCaveRockSmall.png")
 
 func _on_FallZone_body_entered(body):
 #	get_tree().change_scene("res://Scenes/GameOver.tscn")

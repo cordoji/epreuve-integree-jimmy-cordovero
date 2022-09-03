@@ -18,13 +18,28 @@ func fire(origin, direction):
 	if $Cooldown.is_stopped():
 #		var origin = get_tree().root.get_node("Level1/Player").global_position
 		var projectile = projectile_scene.instance()
-		projectile.SPEED = projectile.SPEED * 2
+		projectile_stats(projectile)
 		get_tree().root.add_child(projectile)
-		projectile.global_position = origin
-		var projectile_rotation = origin.direction_to(direction).angle()
-		projectile.rotation = projectile_rotation
+		projectile_in_scene(projectile, origin, direction)
 		projectile.get_node("Sprite").texture = load("res://Assets/Request pack (100 assets)/PNG/laserRedHorizontal.png")
 		$Cooldown.start()
+
+func projectile_stats(projectile):
+	projectile.SPEED = projectile.SPEED * 2
+	if weapon_name == "raygunBig":
+		projectile.damage *= 2
+		$Cooldown.wait_time = 1
+	if weapon_name == "raygunPurple":
+		projectile.damage /= 2
+		$Cooldown.wait_time = 0.25
+	if weapon_name == "raygunPurpleBig":
+		projectile.damage *= 4
+		$Cooldown.wait_time = 2
+
+func projectile_in_scene(projectile, origin, direction):
+	projectile.global_position = origin
+	var projectile_rotation = origin.direction_to(direction).angle()
+	projectile.rotation = projectile_rotation
 
 func _on_Weapon_body_entered(_body):
 	
