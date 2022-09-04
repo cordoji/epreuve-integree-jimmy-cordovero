@@ -1,10 +1,16 @@
 extends CanvasLayer
 
+var auctionHouse = false
+
 func _input(event):
 	if event.is_action_pressed("inventory"):
 		$Inventory.visible = !$Inventory.visible
 		$Inventory.initialize_inventory()
 		$Inventory.initialize_equips()
+		get_tree().paused = !get_tree().paused
+	
+	if event.is_action_pressed("ui_accept") and auctionHouse:
+		$AuctionHouse.visible = !$AuctionHouse.visible
 		get_tree().paused = !get_tree().paused
 	
 	if event.is_action_pressed("ui_cancel") and $Inventory.visible == true:

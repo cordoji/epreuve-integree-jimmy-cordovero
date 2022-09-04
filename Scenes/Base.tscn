@@ -16,6 +16,7 @@ extents = Vector2( 42.5, 27 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
+cell_size = Vector2( 70, 70 )
 format = 1
 tile_data = PoolIntArray( -393216, 1, 0, -393204, 1, 0, -327680, 1, 0, -327668, 1, 0, -262144, 1, 0, -262132, 1, 0, -196608, 1, 0, -196596, 1, 0, -131072, 1, 0, -131060, 1, 0, -65536, 1, 0, -65524, 1, 0, 0, 3, 0, 1, 11, 0, 2, 11, 0, 3, 11, 0, 4, 11, 0, 5, 11, 0, 6, 11, 0, 7, 11, 0, 8, 11, 0, 9, 11, 0, 10, 11, 0, 11, 11, 0, 12, 5, 0 )
 
@@ -23,6 +24,7 @@ tile_data = PoolIntArray( -393216, 1, 0, -393204, 1, 0, -327680, 1, 0, -327668, 
 position = Vector2( 160, -64 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
 
 [node name="ClosedDoor" type="Node2D" parent="."]
 position = Vector2( 160, -96 )
@@ -58,3 +60,6 @@ position = Vector2( 640, -96 )
 z_index = -1
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[connection signal="body_entered" from="AuctionHouse" to="AuctionHouse" method="_on_AuctionHouse_body_entered"]
+[connection signal="body_exited" from="AuctionHouse" to="AuctionHouse" method="_on_AuctionHouse_body_exited"]
