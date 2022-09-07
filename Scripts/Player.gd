@@ -72,7 +72,7 @@ func throw_rock(origin, direction):
 func rock_stats(projectile):
 	projectile.SPEED = projectile.SPEED / 2
 	projectile.GRAVITY = 15
-	projectile.damage = 30
+	projectile.damage = 300
 
 func rock_in_scene(projectile, origin, direction):
 	projectile.get_node("Sound").stream = null

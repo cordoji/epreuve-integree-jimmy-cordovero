@@ -255,13 +255,13 @@ position = Vector2( 2176, 64 )
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Enemy" parent="Enemies" instance=ExtResource( 10 )]
-position = Vector2( 1387, -201 )
+position = Vector2( 480, 320 )
 
 [node name="Enemy2" parent="Enemies" instance=ExtResource( 10 )]
-position = Vector2( 1983, -389 )
+position = Vector2( 608, 320 )
 
 [node name="Enemy3" parent="Enemies" instance=ExtResource( 10 )]
-position = Vector2( 2414, -649 )
+position = Vector2( 736, 320 )
 
 [node name="Enemy4" parent="Enemies" instance=ExtResource( 10 )]
 position = Vector2( 3599, 307 )

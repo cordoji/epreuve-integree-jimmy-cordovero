@@ -727,7 +727,7 @@ vframes = 3
 [node name="WeaponSprite" type="Sprite" parent="Sprites"]
 position = Vector2( -14, 48 )
 rotation = 1.5708
-flip_v = true
+flip_h = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprites"]
 anims/Air_left = SubResource( 9 )

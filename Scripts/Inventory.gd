@@ -57,3 +57,16 @@ func initialize_equips():
 	for i in range(equip_slots.size()):
 		if PlayerInventory.equips.has(i):
 			equip_slots[i].initialize_weapon(PlayerInventory.equips[i][0])
+#	for i in range(PlayerInventory.inventory.size()):
+#		print(PlayerInventory.inventory[i][0].position)
+
+func reset_inventory():
+	var slots = inventory_slots.get_children()
+	for i in range(slots.size()):
+		delete_children(slots[i])
+		slots[i].weapon = null
+		slots[i].refresh_style()
+
+static func delete_children(node):
+	for n in node.get_children():
+		node.remove_child(n)
