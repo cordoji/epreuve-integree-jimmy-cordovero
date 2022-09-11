@@ -26,7 +26,11 @@ func sell_gui_input(event: InputEvent, slot: SellSlotClass):
 			$SellWindow.popup_centered()
 			selected_weapon = slot.weapon
 			selected_slot = slot
-			$SellWindow.dialog_text = "name : " + selected_weapon.weapon_name + "\ndamage : " + str(selected_weapon.damage_modifier * 30) + "\nrate of fire : " + str(1 / selected_weapon.fire_rate)
+			$SellWindow.dialog_text = description(selected_weapon)
+
+func description(weapon):
+	var d = "name : " + weapon.weapon_name + "\ndamage : " + str(weapon.damage_modifier * 30) + "\nrate of fire : " + str(1 / weapon.fire_rate)
+	return d
 
 #func _on_Sell_toggled(button_pressed):
 #	$GridContainer.visible = !$GridContainer.visible
@@ -72,3 +76,10 @@ func create_auction_line(weapon):
 	item.seller = get_tree().root.get_node("Master/CurrentScene/Base/Player").id
 	item.refresh()
 	$TabContainer/Buy/ScrollContainer/VBoxContainer.add_child(item)
+
+
+
+
+
+func _on_Panel_mouse_entered():
+	pass # Replace with function body.

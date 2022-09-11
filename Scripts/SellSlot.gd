@@ -37,3 +37,12 @@ func initialize_weapon(w):
 	else:
 		weapon.set_weapon(w)
 	refresh_style()
+
+
+func _on_Panel_mouse_entered():
+	if weapon:
+		get_tree().root.get_node("Master/UserInterface/AuctionHouse/Infos/Description").text = get_tree().root.get_node("Master/UserInterface/AuctionHouse").description(weapon)
+
+
+func _on_Panel_mouse_exited():
+	get_tree().root.get_node("Master/UserInterface/AuctionHouse/Infos/Description").text = ""
