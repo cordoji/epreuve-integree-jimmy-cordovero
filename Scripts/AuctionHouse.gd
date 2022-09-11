@@ -7,7 +7,7 @@ const WeaponClass = preload("res://Scripts/Weapon.gd")
 
 const NUM_SELL_SLOTS = 60
 
-onready var inventory_sellSlots = $GridContainer
+onready var inventory_sellSlots = $TabContainer/Sell/GridContainer
 
 var selected_weapon
 var selected_slot
@@ -19,8 +19,6 @@ func _ready():
 	for i in range (sell_slots.size()):
 		sell_slots[i].connect("gui_input", self, "sell_gui_input", [sell_slots[i]])
 		sell_slots[i].slot_index = i
-#		print(sell_slots[i].is_connected("gui_input", self, "sell_gui_input"))
-#		print([sell_slots[i]])
 
 func sell_gui_input(event: InputEvent, slot: SellSlotClass):
 	if event is InputEventMouseButton:
@@ -30,9 +28,9 @@ func sell_gui_input(event: InputEvent, slot: SellSlotClass):
 			selected_slot = slot
 			$SellWindow.dialog_text = "name : " + selected_weapon.weapon_name + "\ndamage : " + str(selected_weapon.damage_modifier * 30) + "\nrate of fire : " + str(1 / selected_weapon.fire_rate)
 
-func _on_Sell_toggled(_button_pressed):
-	$GridContainer.visible = !$GridContainer.visible
-	$ScrollContainer.visible = !$ScrollContainer.visible
+#func _on_Sell_toggled(button_pressed):
+#	$GridContainer.visible = !$GridContainer.visible
+#	$ScrollContainer.visible = !$ScrollContainer.visible
 
 
 func initialize_sellables():
@@ -40,8 +38,6 @@ func initialize_sellables():
 	for i in range(sellSlots.size()):
 		if PlayerInventory.inventory.has(i):
 			sellSlots[i].initialize_weapon(PlayerInventory.inventory[i][0])
-#	for i in range(PlayerInventory.inventory.size()):
-#		print(PlayerInventory.inventory[i][0].position)
 
 func reset_sellables():
 	var sellSlots = inventory_sellSlots.get_children()
@@ -70,10 +66,9 @@ func item_in_slot_auctioned(slot):
 
 func create_auction_line(weapon):
 	var item = auctioned_item_scene.instance()
-#	item.get_node("AuctionedItem/Weapon/Visual/TextureRect").texture = weapon.get_node("TextureRect").texture
 	item.description = $SellWindow.dialog_text
 	item.price = $SellWindow.price
 	item.weapon_on_auction = weapon
 	item.seller = get_tree().root.get_node("Master/CurrentScene/Base/Player").id
 	item.refresh()
-	$ScrollContainer/VBoxContainer.add_child(item)
+	$TabContainer/Buy/ScrollContainer/VBoxContainer.add_child(item)
