@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scripts/AuctionHouse.gd" type="Script" id=1]
 [ext_resource path="res://Tilesets/Inventory.tres" type="TileSet" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://AuctionHouseButton.tres" type="ButtonGroup" id=8]
 [ext_resource path="res://Assets/fonts/Kenney Bold.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Scripts/SellSlot.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/SellWindow.tscn" type="PackedScene" id=11]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 3 )
@@ -65,6 +66,7 @@ margin_left = 250.0
 margin_top = 100.0
 margin_right = 986.0
 margin_bottom = 520.0
+rect_min_size = Vector2( 736, 420 )
 custom_constants/vseparation = 0
 custom_constants/hseparation = 0
 columns = 10
@@ -650,6 +652,7 @@ custom_fonts/font = SubResource( 13 )
 text = "Infos"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
+visible = false
 margin_left = 256.0
 margin_top = 96.0
 margin_right = 956.0
@@ -657,4 +660,7 @@ margin_bottom = 516.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 
+[node name="SellWindow" parent="." instance=ExtResource( 11 )]
+
 [connection signal="toggled" from="Sell" to="." method="_on_Sell_toggled"]
+[connection signal="item_auctioned" from="SellWindow" to="." method="_on_SellWindow_item_auctioned"]

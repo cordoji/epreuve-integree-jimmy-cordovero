@@ -9,3 +9,5 @@ func _ready():
 	var titleMenu = titleMenu_scene.instance()
 	current_scene = titleMenu
 	get_tree().root.get_node("Master/CurrentScene").call_deferred("add_child", titleMenu)
+
+

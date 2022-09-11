@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
-var SPEED = 1000
-var damage = 60
+var SPEED = 2000
+var damage = 30
 
 var velocity = Vector2(0,0)
 var GRAVITY = 0
@@ -30,7 +30,7 @@ func hit():
 #	destroy()
 
 
-func _on_OnHit_animation_finished(anim_name):
+func _on_OnHit_animation_finished(_anim_name):
 	destroy()
 
 

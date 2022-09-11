@@ -5,36 +5,46 @@ var projectile_scene = preload("res://Scenes/Projectile.tscn")
 var weapon_name
 var weapons_array = ["raygun", "raygunBig", "raygunPurple", "raygunPurpleBig"]
 
+var damage_modifier
+var fire_rate
+
 var rng = RandomNumberGenerator.new()
 
 func _ready():
 	rng.randomize()
 	var number = rng.randi_range(0, weapons_array.size() - 1)
 	weapon_name = weapons_array[number]
+	damage_modifier = number + 1
+	fire_rate = (number + 1)/2.0
 	$Sprite.texture = load("res://Assets/Request pack (100 assets)/PNG/" + weapon_name + ".png")
-	print(number)
+#	print(damage_modifier)
 
 func fire(origin, direction):
 	if $Cooldown.is_stopped():
 #		var origin = get_tree().root.get_node("Level1/Player").global_position
 		var projectile = projectile_scene.instance()
 		projectile_stats(projectile)
+		print(projectile.damage)
+		print($Cooldown.wait_time)
+		print(fire_rate)
 		get_tree().root.add_child(projectile)
 		projectile_in_scene(projectile, origin, direction)
 		projectile.get_node("Sprite").texture = load("res://Assets/Request pack (100 assets)/PNG/laserRedHorizontal.png")
 		$Cooldown.start()
 
 func projectile_stats(projectile):
-	projectile.SPEED = projectile.SPEED * 2
-	if weapon_name == "raygunBig":
-		projectile.damage *= 2
-		$Cooldown.wait_time = 1
-	if weapon_name == "raygunPurple":
-		projectile.damage /= 2
-		$Cooldown.wait_time = 0.25
-	if weapon_name == "raygunPurpleBig":
-		projectile.damage *= 4
-		$Cooldown.wait_time = 2
+		projectile.damage *= damage_modifier
+		$Cooldown.wait_time = fire_rate
+#	projectile.SPEED = projectile.SPEED * 2
+#	if weapon_name == "raygunBig":
+#		projectile.damage *= 2
+#		$Cooldown.wait_time = 1
+#	if weapon_name == "raygunPurple":
+#		projectile.damage /= 2
+#		$Cooldown.wait_time = 0.25
+#	if weapon_name == "raygunPurpleBig":
+#		projectile.damage *= 4
+#		$Cooldown.wait_time = 2
 
 func projectile_in_scene(projectile, origin, direction):
 	projectile.global_position = origin

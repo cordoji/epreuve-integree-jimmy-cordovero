@@ -21,12 +21,12 @@ func _input(event):
 func next_level():
 	var currentScene = get_tree().root.get_node("Master").current_scene
 	get_tree().root.get_node("Master/CurrentScene").call_deferred("remove_child", currentScene)
-	var ERR = get_tree().root.get_node("Master/CurrentScene").call_deferred("add_child", target_scene.instance())
+	get_tree().root.get_node("Master/CurrentScene").call_deferred("add_child", target_scene.instance())
 	get_tree().root.get_node("Master").current_scene = target_scene
 #	var ERR = get_tree().change_scene_to(target_scene.instance())
 
-	if ERR != OK:
-		print("something failed in the door scene")
+#	if ERR != OK:
+#		print("something failed in the door scene")
 
 #func _on_Portal_input_event(viewport, event, shape_idx):
 #	if event.is_action_pressed("ui_accept"):

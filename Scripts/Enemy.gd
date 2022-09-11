@@ -21,7 +21,7 @@ func _ready():
 	#if detects_cliffs:
 		#set_modulate(Color(1.2, 0.5, 1))
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	
 	if is_on_wall() or not $FloorChecker.is_colliding() and is_on_floor() and detects_cliffs:
 		direction *= -1

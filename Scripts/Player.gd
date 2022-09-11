@@ -2,9 +2,11 @@ extends KinematicBody2D
 
 var projectile_scene = preload("res://Scenes/Projectile.tscn")
 
+var id
+
 var startPosition = Vector2(0,0)
 var velocity = Vector2(0,0)
-var coins = 0
+var coins = 1000
 const SPEED = 300
 const GRAVITY = 30
 const JUMPFORCE = -900
@@ -12,8 +14,9 @@ const JUMPFORCE = -900
 func _ready():
 	PlayerInventory.connect("active_weapon_updated", self, "refresh_displayed_weapon")
 	startPosition = self.position
+	id = "player"
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	
 	if Input.is_action_pressed("right"):
 		velocity.x = SPEED
@@ -70,7 +73,7 @@ func throw_rock(origin, direction):
 		$RockTimer.start()
 
 func rock_stats(projectile):
-	projectile.SPEED = projectile.SPEED / 2
+	projectile.SPEED = projectile.SPEED / 4
 	projectile.GRAVITY = 15
 	projectile.damage = 300
 
@@ -82,7 +85,7 @@ func rock_in_scene(projectile, origin, direction):
 	projectile.rotation = projectile_rotation
 	projectile.get_node("Sprite").texture = load("res://Assets/Request pack (100 assets)/PNG/dirtCaveRockSmall.png")
 
-func _on_FallZone_body_entered(body):
+func _on_FallZone_body_entered(_body):
 #	get_tree().change_scene("res://Scenes/GameOver.tscn")
 #	var currentScene = get_tree().root.get_node("Master").current_scene
 #	get_tree().root.get_node("Master/CurrentScene").call_deferred("remove_child", currentScene)

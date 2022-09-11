@@ -1,11 +1,16 @@
 extends Node2D
 
-const SellSlotClass = preload("res://Scripts/SellSlot.gd")
+var auctioned_item_scene = preload("res://Scenes/AuctionedItem.tscn")
 
+const SellSlotClass = preload("res://Scripts/SellSlot.gd")
 const WeaponClass = preload("res://Scripts/Weapon.gd")
+
 const NUM_SELL_SLOTS = 60
 
 onready var inventory_sellSlots = $GridContainer
+
+var selected_weapon
+var selected_slot
 
 var sellList = {}
 
@@ -14,15 +19,21 @@ func _ready():
 	for i in range (sell_slots.size()):
 		sell_slots[i].connect("gui_input", self, "sell_gui_input", [sell_slots[i]])
 		sell_slots[i].slot_index = i
+#		print(sell_slots[i].is_connected("gui_input", self, "sell_gui_input"))
+#		print([sell_slots[i]])
 
-func slot_gui_input(event: InputEvent, slot: SellSlotClass):
+func sell_gui_input(event: InputEvent, slot: SellSlotClass):
 	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT && event.pressed:
-			pass
-	return
+		if event.button_index == BUTTON_LEFT && event.pressed && slot.weapon:
+			$SellWindow.popup_centered()
+			selected_weapon = slot.weapon
+			selected_slot = slot
+			$SellWindow.dialog_text = "name : " + selected_weapon.weapon_name + "\ndamage : " + str(selected_weapon.damage_modifier * 30) + "\nrate of fire : " + str(1 / selected_weapon.fire_rate)
 
-func _on_Sell_toggled(button_pressed):
+func _on_Sell_toggled(_button_pressed):
 	$GridContainer.visible = !$GridContainer.visible
+	$ScrollContainer.visible = !$ScrollContainer.visible
+
 
 func initialize_sellables():
 	var sellSlots = inventory_sellSlots.get_children()
@@ -42,3 +53,27 @@ func reset_sellables():
 static func delete_children(node):
 	for n in node.get_children():
 		node.remove_child(n)
+
+func _on_SellWindow_item_auctioned():
+	for i in range(sellList.size() + 1):
+		if sellList.has(i) == false:
+			sellList[i] = [selected_weapon, $SellWindow.price]
+			item_in_slot_auctioned(selected_slot)
+			return
+
+func item_in_slot_auctioned(slot):
+	create_auction_line(slot.weapon)
+	slot.weapon = null
+	PlayerInventory.inventory.erase(slot.slot_index)
+	delete_children(slot)
+	slot.refresh_style()
+
+func create_auction_line(weapon):
+	var item = auctioned_item_scene.instance()
+#	item.get_node("AuctionedItem/Weapon/Visual/TextureRect").texture = weapon.get_node("TextureRect").texture
+	item.description = $SellWindow.dialog_text
+	item.price = $SellWindow.price
+	item.weapon_on_auction = weapon
+	item.seller = get_tree().root.get_node("Master/CurrentScene/Base/Player").id
+	item.refresh()
+	$ScrollContainer/VBoxContainer.add_child(item)
