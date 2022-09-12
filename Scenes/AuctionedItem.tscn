@@ -104,4 +104,10 @@ text = "Buy"
 align = 2
 icon_align = 2
 
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+margin_right = 95.0
+margin_bottom = 58.0
+window_title = "Alerte !"
+dialog_text = "Not enough funds"
+
 [connection signal="pressed" from="Line/Buy" to="." method="_on_Buy_pressed"]

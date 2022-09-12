@@ -1,14 +1,18 @@
 extends Area2D
 
-export(PackedScene) var target_scene
+#export(PackedScene) var target_scene
 #var level1_scene = preload("res://Scenes/Level1.tscn")
+#export(String, FILE, "*.tscn") var target_scene
+export(String) var target_scene
 
+var next_scene
 var open = false
 
 func ready():
+	
+#	nextScene = get_tree().root.get_node("Master").provide_level(target_scene).instance()
 	if target_scene == null:
 		generate_level()
-		
 
 func _input(event):
 	if event.is_action_pressed("ui_accept") and open:
@@ -19,10 +23,11 @@ func _input(event):
 		next_level()
 
 func next_level():
+	provide_level()
 	var currentScene = get_tree().root.get_node("Master").current_scene
 	get_tree().root.get_node("Master/CurrentScene").call_deferred("remove_child", currentScene)
-	get_tree().root.get_node("Master/CurrentScene").call_deferred("add_child", target_scene.instance())
-	get_tree().root.get_node("Master").current_scene = target_scene
+	get_tree().root.get_node("Master/CurrentScene").call_deferred("add_child", next_scene)
+	get_tree().root.get_node("Master").current_scene = next_scene
 #	var ERR = get_tree().change_scene_to(target_scene.instance())
 
 #	if ERR != OK:
@@ -51,3 +56,13 @@ static func _delete_children(node):
 func generate_level():
 #	target_scene = ...
 	pass
+
+func provide_level():
+	match(target_scene):
+		"base_scene":
+			next_scene = get_tree().root.get_node("Master").base_scene.instance()
+		"level1_scene":
+			next_scene = get_tree().root.get_node("Master").level1_scene.instance()
+		_:
+			print("no scene")
+		

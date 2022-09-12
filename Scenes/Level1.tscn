@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Tilesets/WorldTileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=2]
@@ -15,7 +15,6 @@
 [ext_resource path="res://Assets/UI/arrow-UP.png" type="Texture" id=16]
 [ext_resource path="res://Assets/Tappy Plane/PNG/UI/tapTick.png" type="Texture" id=17]
 [ext_resource path="res://Scenes/Portal.tscn" type="PackedScene" id=18]
-[ext_resource path="res://Scenes/Base.tscn" type="PackedScene" id=19]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 128, 32 )
@@ -340,6 +339,6 @@ valign = 1
 [node name="Portal" parent="." instance=ExtResource( 18 )]
 position = Vector2( 320, 288 )
 z_index = -1
-target_scene = ExtResource( 19 )
+target_scene = "base_scene"
 
 [connection signal="body_entered" from="FallZone" to="Player" method="_on_FallZone_body_entered"]

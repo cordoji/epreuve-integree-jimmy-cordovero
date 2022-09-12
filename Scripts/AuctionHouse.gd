@@ -76,10 +76,3 @@ func create_auction_line(weapon):
 	item.seller = get_tree().root.get_node("Master/CurrentScene/Base/Player").id
 	item.refresh()
 	$TabContainer/Buy/ScrollContainer/VBoxContainer.add_child(item)
-
-
-
-
-
-func _on_Panel_mouse_entered():
-	pass # Replace with function body.

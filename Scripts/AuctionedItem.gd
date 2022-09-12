@@ -14,9 +14,13 @@ func refresh():
 	$Line/Weapon/Description.text = description
 
 func _on_Buy_pressed():
-	PlayerInventory.add_weapon(weapon_on_auction)
-	print(PlayerInventory.inventory)
-	get_tree().root.get_node("Master/UserInterface/AuctionHouse").initialize_sellables()
-	get_tree().root.get_node("Master/CurrentScene/Base/HUD").coins -= price
-	get_tree().root.get_node("Master/CurrentScene/Base/HUD").refresh()
-	self.queue_free()
+	if get_tree().root.get_node("Master/CurrentScene/Base/HUD").coins > price:
+		PlayerInventory.add_weapon(weapon_on_auction)
+		print(PlayerInventory.inventory)
+		get_tree().root.get_node("Master/UserInterface/AuctionHouse").initialize_sellables()
+		get_tree().root.get_node("Master/CurrentScene/Base/HUD").coins -= price
+		get_tree().root.get_node("Master/CurrentScene/Base/HUD").refresh()
+		self.queue_free()
+	else:
+		$AcceptDialog.popup_centered()
+
