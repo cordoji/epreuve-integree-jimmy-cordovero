@@ -1,9 +1,10 @@
 extends CanvasLayer
 
 var auctionHouse = false
+var inventory = false
 
 func _input(event):
-	if event.is_action_pressed("inventory") and !$AuctionHouse.visible:
+	if event.is_action_pressed("inventory") and !$AuctionHouse.visible and inventory:
 		$Inventory.visible = !$Inventory.visible
 		$AuctionHouse.reset_sellables()
 		$Inventory.initialize_inventory()
