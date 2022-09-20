@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/a768938c-e5fd-43ed-a943-12a9c4102fc0/AppServices/subscriptions/a768938c-e5fd-43ed-a943-12a9c4102fc0/resourceGroups/j.cordovero_rg_3019/providers/Microsoft.Web/sites/Contralands",
+    "appService.deploySubpath": "."
+}

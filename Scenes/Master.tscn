@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Master.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Inventory.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/UserInterface.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/AuctionHouse.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Login.tscn" type="PackedScene" id=5]
 
 [node name="Master" type="Node2D"]
 script = ExtResource( 1 )
@@ -19,3 +20,5 @@ visible = false
 visible = false
 
 [node name="CurrentScene" type="Node2D" parent="."]
+
+[node name="Login" parent="." instance=ExtResource( 5 )]

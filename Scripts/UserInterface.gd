@@ -10,7 +10,7 @@ func _input(event):
 		$Inventory.initialize_equips()
 		get_tree().paused = !get_tree().paused
 	
-	if event.is_action_pressed("ui_accept") and auctionHouse and !$Inventory.visible:
+	if event.is_action_pressed("ui_accept") and auctionHouse and !$Inventory.visible and !$AuctionHouse/SellWindow.visible:
 		$AuctionHouse.visible = !$AuctionHouse.visible
 		$Inventory.reset_inventory()
 		$AuctionHouse.initialize_sellables()
