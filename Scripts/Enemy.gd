@@ -65,7 +65,6 @@ func _on_HitBox_body_entered(body):
 			$HealthBar.visible = true
 		else:
 			$HealthBar.visible = false
-		
 		body.hit()
 		if health <= 0:
 			$AnimatedSprite.play("Killed")

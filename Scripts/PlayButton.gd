@@ -10,4 +10,4 @@ func _on_PlayButton_pressed():
 	get_tree().root.get_node("Master/CurrentScene").call_deferred("add_child", level1)
 	currentScene.queue_free()
 	get_tree().root.get_node("Master").current_scene = level1
-	get_tree().root.get_node("Master").inventory = true
+	get_tree().root.get_node("Master/UserInterface").inventory = true

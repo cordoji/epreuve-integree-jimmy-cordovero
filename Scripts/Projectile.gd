@@ -5,6 +5,7 @@ var damage = 30
 
 var velocity = Vector2(0,0)
 var GRAVITY = 0
+var tempV = velocity.y
 
 #func _ready():
 #	$Sprite.texture = load("res://Assets/Request pack (100 assets)/PNG/dirtCaveRockSmall.png")
@@ -22,11 +23,19 @@ func destroy():
 	queue_free()
 
 func hit():
+	$Label.visible = true
+	$Label.text = str(damage)
 	set_collision_layer_bit(5, false)
 	SPEED = 0
+	GRAVITY = 0
+	velocity.y = 0
 	$Sprite.visible = false
 	if $Sprite.texture == load("res://Assets/Request pack (100 assets)/PNG/laserRedHorizontal.png"):
 		$OnHit.play("Burst")
+	else:
+		$HitEffect.texture = null
+		$OnHit.play("Burst")
+		
 #	destroy()
 
 
