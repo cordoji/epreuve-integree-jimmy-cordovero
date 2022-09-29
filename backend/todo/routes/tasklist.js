@@ -8,7 +8,8 @@ const TaskDao = require("../models/TaskDao");
    constructor(taskDao) {
      this.taskDao = taskDao;
    }
-   async showTasks(req, res) {
+
+   /*async showTasks(req, res) {
      const querySpec = {
        query: "SELECT * FROM root r WHERE r.completed=@completed",
        parameters: [
@@ -24,13 +25,31 @@ const TaskDao = require("../models/TaskDao");
        title: "My ToDo List ",
        tasks: items
      });
-   }
+   }*/
+
+   async showIndex(req, res) {
+    const querySpec = {
+      query: "SELECT * FROM root r WHERE r.completed=@completed",
+      parameters: [
+        {
+          name: "@completed",
+          value: false
+        }
+      ]
+    };
+
+    const items = await this.taskDao.find(querySpec);
+    res.render("index", {
+      title: "Contralands",
+      tasks: items
+    });
+  }
 
    /*async postTask(req, res){
     res.send(req)
    }*/
 
-   async getAll(req, res){
+   /*async getAll(req, res){
     const querySpec = {
       query: "SELECT * FROM root r WHERE r.completed=@completed",
       parameters: [
@@ -43,57 +62,79 @@ const TaskDao = require("../models/TaskDao");
 
     const items = await this.taskDao.find(querySpec);
     res.send(items);
-   }
+   }*/
 
    async getUser(req, res){
     const querySpec = {
-      query: "SELECT * FROM root r WHERE r.name=@name" ,
+      query: "SELECT * FROM root r WHERE r.username=@username" ,
       parameters: [
         {
-          name: "@name",
-          value: req.body.name
+          name: "@username",
+          value: req.body.username
         }
       ]
     };
 
-    const items = await this.taskDao.find(querySpec);
+    const items = await this.taskDao.findUser(querySpec);
+    res.send(items);
+   }
+
+   async getWeapon(req, res){
+    const querySpec = {
+      query: "SELECT * FROM root r WHERE r.id=@id" ,
+      parameters: [
+        {
+          id: "@id",
+          value: req.body.id
+        }
+      ]
+    };
+
+    const items = await this.taskDao.findWeapon(querySpec);
     res.send(items);
    }
 
    async getLogin(req, res){
     const querySpec = {
-      query: "SELECT * FROM root r WHERE r.name=@name and r.category=@category" ,
+      query: "SELECT * FROM root r WHERE r.username=@username and r.password=@password" ,
       parameters: [
         {
-          name: "@name",
-          value: req.body.name
+          name: "@username",
+          value: req.body.username
         },
         {
-          name: "@category",
-          value: req.body.category
+          name: "@password",
+          value: req.body.password
         }
       ]
     };
 
-    const items = await this.taskDao.find(querySpec);
+    const items = await this.taskDao.findUser(querySpec);
     res.send(items);
    }
 
-   async addTask(req, res) {
+   /*async addTask(req, res) {
      const item = req.body;
 
      await this.taskDao.addItem(item);
      res.redirect("/");
-   }
+   }*/
 
    async addUser(req, res) {
     const item = req.body;
 
-    await this.taskDao.addItem(item);
-    res.redirect("/");
-  }
+    await this.taskDao.addUser(item);
+    res.send();
+   }
 
-   async completeTask(req, res) {
+   async addWeapon(req, res) {
+    const item = req.body;
+
+    await this.taskDao.addWeapon(item);
+    res.send();
+   }
+
+   /*async completeTask(req, res) {
      const completedTasks = Object.keys(req.body);
      const tasks = [];
 
@@ -104,7 +145,7 @@ const TaskDao = require("../models/TaskDao");
      await Promise.all(tasks);
 
      res.redirect("/");
-   }
+   }*/
  }
 
  module.exports = TaskList;

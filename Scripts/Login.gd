@@ -19,10 +19,12 @@ func _on_Register_pressed():
 	$ConfirmGroup.visible = true
 
 func _on_Cancel_pressed():
+	register_p = false
 	$Buttons.visible = true
 	$ConfirmGroup.visible = false
 
 func _on_CancelB_pressed():
+	login_p = false
 	$Buttons.visible = true
 	$LoginForm.visible = false
 
@@ -33,12 +35,12 @@ func _on_Confirm_pressed():
 		$Popup.popup_centered()
 		return
 		
-	var data_to_send = { "name" : $ConfirmGroup/UserNameC.text }
+	var data_to_send = { "username" : $ConfirmGroup/UserNameC.text }
 	_make_post_request(url + "user", data_to_send, true)
 
 func _on_LoginB_pressed():
 	login_p = true
-	var data_to_send = { "name" : $LoginForm/UserName.text, "category" : $LoginForm/Password.text }
+	var data_to_send = { "username" : $LoginForm/UserName.text, "password" : $LoginForm/Password.text }
 	_make_post_request(url + "login", data_to_send, true)
 
 func _make_post_request(url, data_to_send, use_ssl):
@@ -48,7 +50,8 @@ func _make_post_request(url, data_to_send, use_ssl):
 	$HTTPRequest.request(url, headers, use_ssl, HTTPClient.METHOD_POST, query)
 
 func _on_request_completed(result, response_code, headers, body):
-	if body.get_string_from_utf8() != "[]":
+	print(body.get_string_from_utf8())
+	if body.get_string_from_utf8().length() > 3:
 		var json = JSON.parse(body.get_string_from_utf8())
 		last_request = json.result
 	else:
@@ -63,7 +66,7 @@ func _on_request_completed(result, response_code, headers, body):
 func register_player():
 	register_p = false
 	if last_request == null:
-		var data_to_send = { "name" : $ConfirmGroup/UserNameC.text , "category" : $ConfirmGroup/PasswordC.text  }
+		var data_to_send = { "username" : $ConfirmGroup/UserNameC.text , "password" : $ConfirmGroup/PasswordC.text  }
 		_make_post_request(url + "adduser", data_to_send, true)
 		self.visible = false
 	else:
@@ -77,3 +80,4 @@ func login_player():
 		return
 	$Popup.dialog_text = "That User/Password combination doesn't exist"
 	$Popup.popup_centered()
+	$HTTPRequest.queue_free()

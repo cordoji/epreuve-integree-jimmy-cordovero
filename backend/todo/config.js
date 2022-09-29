@@ -2,9 +2,13 @@ const config = {};
 
 config.host = process.env.HOST || "https://contralands.documents.azure.com:443/";
 config.authKey =
-  process.env.AUTH_KEY || ;
-config.databaseId = "ToDoList";
-config.containerId = "Items";
+  process.env.AUTH_KEY || 
+config.databaseId = "Contralands";
+config.containerUserId = "Users";
+config.containerWeaponId = "Weapons"
+config.containerInventoryId = "Inventory"
+config.containerEquipmentId = "Equipment"
+config.containerAuctionHouseId = "AuctionHouse"
 
 if (config.host.includes("https://localhost:")) {
   console.log("Local environment detected");

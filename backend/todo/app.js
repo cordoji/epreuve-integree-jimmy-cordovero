@@ -28,7 +28,15 @@ const CosmosClient = require('@azure/cosmos').CosmosClient
    endpoint: config.host,
    key: config.authKey
  })
- const taskDao = new TaskDao(cosmosClient, config.databaseId, config.containerId)
+ const taskDao = new TaskDao(
+  cosmosClient, 
+  config.databaseId, 
+  config.containerUserId, 
+  config.containerWeaponId, 
+  config.containerInventoryId,
+  config.containerEquipmentId,
+  config.containerAuctionHouseId)
+
  const taskList = new TaskList(taskDao)
  taskDao
    .init(err => {
@@ -42,16 +50,18 @@ const CosmosClient = require('@azure/cosmos').CosmosClient
      process.exit(1)
    })
 
- app.get('/', (req, res, next) => taskList.showTasks(req, res).catch(next))
- app.get('/all', (req, res, next) => taskList.getAll(req, res).catch(next))
+ app.get('/', (req, res, next) => taskList.showIndex(req, res).catch(next))
+ //app.get('/all', (req, res, next) => taskList.getAll(req, res).catch(next))
  app.post('/user', (req, res, next) => taskList.getUser(req, res).catch(next))
+ app.post('/weapon', (req, res, next) => taskList.getWeapon(req, res).catch(next))
  app.post('/login', (req, res, next) => taskList.getLogin(req, res).catch(next))
- app.post('/addtask', (req, res, next) => taskList.addTask(req, res).catch(next))
+ //app.post('/addtask', (req, res, next) => taskList.addTask(req, res).catch(next))
  app.post('/adduser', (req, res, next) => taskList.addUser(req, res).catch(next))
+ app.post('/addweapon', (req, res, next) => taskList.addWeapon(req, res).catch(next))
  //app.post('/addtask', (req, res, next) => taskList.postTask(req, res).catch(next))
- app.post('/completetask', (req, res, next) =>
+ /*app.post('/completetask', (req, res, next) =>
    taskList.completeTask(req, res).catch(next)
- )
+ )*/
  app.set('view engine', 'jade')
 
  // catch 404 and forward to error handler
