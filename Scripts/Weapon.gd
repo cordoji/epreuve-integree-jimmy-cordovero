@@ -13,6 +13,7 @@ var fire_rate
 var id
 var index
 var owner_username
+var to_inventory = false
 
 var rng = RandomNumberGenerator.new()
 
@@ -51,15 +52,15 @@ func projectile_in_scene(projectile, origin, direction):
 
 func _on_Weapon_body_entered(_body):
 	PlayerInventory.add_weapon(self)
-	var data_to_send = { "name" : weapon_name, "damage" : damage_modifier, "rof" : fire_rate, "owner" : owner_username }
-	_make_post_request(url, "addweapon", data_to_send, true)
+	var data_weapon = { "name" : weapon_name, "damage" : damage_modifier, "rof" : fire_rate, "owner" : owner_username }
+	_make_post_request(url, "addweapon", data_weapon, true)
 #	print("test")
 	
 	$AnimationPlayer.play("Bounce")
 
-#func add_to_inventory(index):
-#	var data_to_send = { "wid" : id, "index" : index}
-#	_make_post_request(url + "addinventory", data_to_send, true)
+func add_to_inventory(index):
+	var data_to_send = { "wid" : id, "index" : index}
+	_make_post_request(url, "addinventory", data_to_send, true)
 
 func _spawn():
 	get_node("TextureRect").visible = false
@@ -86,6 +87,12 @@ func _make_post_request(url, method, data_to_send, use_ssl):
 	$HTTPRequest.request(url + method, headers, use_ssl, HTTPClient.METHOD_POST, query)
 
 func _on_request_completed(result, response_code, headers, body):
-	self.visible = true
-	get_tree().root.get_node("Master/CurrentScene/Level1/Enemies").call_deferred("remove_child", self)
-	print(body.get_string_from_utf8())
+	if(!to_inventory):
+		var json = JSON.parse(body.get_string_from_utf8())
+		id = json.result.id
+		to_inventory = true
+		add_to_inventory(index)
+	else:
+		self.visible = true
+		get_tree().root.get_node("Master/CurrentScene/Level1/Enemies").call_deferred("remove_child", self)
+		print(body.get_string_from_utf8())

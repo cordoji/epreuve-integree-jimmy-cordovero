@@ -148,6 +148,13 @@ const TaskDao = require("../models/TaskDao");
     res.send(item);
    }
 
+   async addInventory(req, res) {
+    const item = req.body;
+
+    await this.taskDao.addInventory(item);
+    res.send(item);
+   }
+
    /*async completeTask(req, res) {
      const completedTasks = Object.keys(req.body);
      const tasks = [];
