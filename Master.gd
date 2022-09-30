@@ -7,7 +7,7 @@ var base_scene = preload("res://Scenes/Base.tscn")
 var url = "https://contralands.azurewebsites.net/"
 var headers = ["Content-Type: application/json"]
 
-var username = "test"
+var username
 
 var current_scene
 var next_scene

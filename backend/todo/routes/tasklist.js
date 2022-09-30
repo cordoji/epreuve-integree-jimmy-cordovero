@@ -76,7 +76,7 @@ const TaskDao = require("../models/TaskDao");
     };
 
     const items = await this.taskDao.findUser(querySpec);
-    res.send(items);
+    res.send(items[0]);
    }
 
    async getWeapon(req, res){
@@ -110,7 +110,7 @@ const TaskDao = require("../models/TaskDao");
     };
 
     const items = await this.taskDao.findUser(querySpec);
-    res.send(items);
+    res.send(items[0]);
    }
 
    /*async addTask(req, res) {
@@ -121,17 +121,31 @@ const TaskDao = require("../models/TaskDao");
    }*/
 
    async addUser(req, res) {
-    const item = req.body;
+    const querySpec = {
+      query: "SELECT * FROM root r WHERE r.username=@username" ,
+      parameters: [
+        {
+          name: "@username",
+          value: req.body.username
+        }
+      ]
+    };
 
-    await this.taskDao.addUser(item);
-    res.send();
+    const item = req.body;
+    const user = await this.taskDao.findUser(querySpec);
+    if(Object.keys(user).length === 0){
+      await this.taskDao.addUser(item);
+      res.send(item);
+    }
+    else
+      res.send();
    }
 
    async addWeapon(req, res) {
     const item = req.body;
 
     await this.taskDao.addWeapon(item);
-    res.send();
+    res.send(item);
    }
 
    /*async completeTask(req, res) {

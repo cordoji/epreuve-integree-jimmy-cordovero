@@ -11,3 +11,4 @@ func _on_PlayButton_pressed():
 	currentScene.queue_free()
 	get_tree().root.get_node("Master").current_scene = level1
 	get_tree().root.get_node("Master/UserInterface").inventory = true
+	print(get_tree().root.get_node("Master").username)

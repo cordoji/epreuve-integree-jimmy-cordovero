@@ -10,10 +10,14 @@ var weapons_array = ["raygun", "raygunBig", "raygunPurple", "raygunPurpleBig"]
 
 var damage_modifier
 var fire_rate
+var id
+var index
+var owner_username
 
 var rng = RandomNumberGenerator.new()
 
 func _ready():
+	owner_username = get_tree().root.get_node("Master").username
 	$HTTPRequest.connect("request_completed", self, "_on_request_completed")
 	rng.randomize()
 	var number = rng.randi_range(0, weapons_array.size() - 1)
@@ -46,11 +50,16 @@ func projectile_in_scene(projectile, origin, direction):
 	projectile.rotation = projectile_rotation
 
 func _on_Weapon_body_entered(_body):
-	var data_to_send = { "name" : weapon_name, "damage" : damage_modifier, "rof" : fire_rate, "owner" : "test" }
-	_make_post_request(url + "addweapon", data_to_send, true)
-#	print("test")
 	PlayerInventory.add_weapon(self)
+	var data_to_send = { "name" : weapon_name, "damage" : damage_modifier, "rof" : fire_rate, "owner" : owner_username }
+	_make_post_request(url, "addweapon", data_to_send, true)
+#	print("test")
+	
 	$AnimationPlayer.play("Bounce")
+
+#func add_to_inventory(index):
+#	var data_to_send = { "wid" : id, "index" : index}
+#	_make_post_request(url + "addinventory", data_to_send, true)
 
 func _spawn():
 	get_node("TextureRect").visible = false
@@ -71,13 +80,10 @@ func set_weapon(w):
 	get_node("TextureRect").visible = true
 	get_node("Sprite").visible = false
 
-func _make_post_request(url, data_to_send, use_ssl):
+func _make_post_request(url, method, data_to_send, use_ssl):
 	# Convert data to json string:
 	var query = JSON.print(data_to_send)
-	print(query)
-	
-	$HTTPRequest.request(url, headers, use_ssl, HTTPClient.METHOD_POST, query)
-	print(url)
+	$HTTPRequest.request(url + method, headers, use_ssl, HTTPClient.METHOD_POST, query)
 
 func _on_request_completed(result, response_code, headers, body):
 	self.visible = true

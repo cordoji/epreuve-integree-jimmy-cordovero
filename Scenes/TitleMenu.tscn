@@ -52,6 +52,7 @@ script = ExtResource( 2 )
 stream = ExtResource( 4 )
 volume_db = -12.0
 autoplay = true
+stream_paused = true
 
 [node name="SettingsButton" type="Button" parent="."]
 margin_left = 67.0

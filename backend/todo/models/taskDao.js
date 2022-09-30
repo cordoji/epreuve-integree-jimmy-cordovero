@@ -106,6 +106,13 @@ class TaskDao {
     return doc
   }
 
+  async addInventory(item) {
+    debug('Adding a weapon to the inventory in the database')
+    item.date = Date.now()
+    const { resource: doc } = await this.inventoryContainer.items.create(item)
+    return doc
+  }
+
   /*async updateItem(itemId) {
     debug('Update an item in the database')
     const doc = await this.getItem(itemId)
