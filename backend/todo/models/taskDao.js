@@ -20,16 +20,16 @@ class TaskDao {
     this.databaseId = databaseId
     this.collectionUserId = containerUserId
     this.collectionWeaponId = containerWeaponId
-    this.collectionInventoryId = containerInventoryId
+    /*this.collectionInventoryId = containerInventoryId
     this.collectionEquipementId = containerEquipmentId
-    this.collectionAuctionHouseId = containerAuctionHouseId
+    this.collectionAuctionHouseId = containerAuctionHouseId*/
 
     this.database = null
     this.userContainer = null
     this.weaponContainer = null
-    this.inventoryContainer = null
+    /*this.inventoryContainer = null
     this.equipmentContainer = null
-    this.auctionHouseContainer = null
+    this.auctionHouseContainer = null*/
   }
 
   async init() {
@@ -50,7 +50,7 @@ class TaskDao {
     })
     this.weaponContainer = coResponseWeapon.container
 
-    const coResponseInventory = await this.database.containers.createIfNotExists({
+    /*const coResponseInventory = await this.database.containers.createIfNotExists({
       id: this.collectionInventoryId
     })
     this.inventoryContainer = coResponseInventory.container
@@ -63,7 +63,7 @@ class TaskDao {
     const coResponseAuctionHouse = await this.database.containers.createIfNotExists({
       id: this.collectionAuctionHouseId
     })
-    this.auctionHouseContainer = coResponseAuctionHouse.container
+    this.auctionHouseContainer = coResponseAuctionHouse.container*/
   }
 
   async findUser(querySpec) {
@@ -72,6 +72,33 @@ class TaskDao {
       throw new Error('Collection is not initialized.')
     }
     const { resources } = await this.userContainer.items.query(querySpec).fetchAll()
+    return resources
+  }
+
+  /*async findInventory(querySpec) {
+    debug('Querying for inventory from the database')
+    if (!this.inventoryContainer) {
+      throw new Error('Collection is not initialized.')
+    }
+    const { resources } = await this.inventoryContainer.items.query(querySpec).fetchAll()
+    return resources
+  }*/
+
+  async findAll(querySpec) {
+    debug('Querying for inventory from the database')
+    if (!this.weaponContainer) {
+      throw new Error('Collection is not initialized.')
+    }
+    const { resources } = await this.weaponContainer.items.query(querySpec).fetchAll()
+    return resources
+  }
+
+  async findAuctioned(querySpec) {
+    debug('Querying for inventory from the database')
+    if (!this.weaponContainer) {
+      throw new Error('Collection is not initialized.')
+    }
+    const { resources } = await this.weaponContainer.items.query(querySpec).fetchAll()
     return resources
   }
 
@@ -113,6 +140,48 @@ class TaskDao {
     return doc
   }
 
+  async updateCoin(id, newCoins) {
+    debug('Update the coins of a user in the database')
+    const doc = await this.getUser(id)
+    doc.coins = newCoins
+
+    const { resource: replaced } = await this.userContainer
+      .item(id, partitionKey)
+      .replace(doc)
+    return replaced
+  }
+
+  async updateWeapon(body) {
+    debug('Update the index of a weapon in the database')
+    const doc = await this.getWeapon(body.id)
+    doc.index = body.index
+    doc.location = body.location
+
+    const { resource: replaced } = await this.weaponContainer
+      .item(body.id, partitionKey)
+      .replace(doc)
+    return replaced
+  }
+
+  async switchWeapon(body) {
+    debug('Update the index of a weapon in the database')
+    const origin = await this.getWeapon(body.id_origin)
+    const destination = await this.getWeapon(body.id_destination)
+    origin.index = body.index_destination
+    destination.index = body.index_origin
+    origin.location = body.location_destination
+    destination.location = body.location_origin
+
+    const { resource: replaced_origin } = await this.weaponContainer
+      .item(body.id_origin, partitionKey)
+      .replace(origin)
+
+    const { resource: replaced_destination } = await this.weaponContainer
+      .item(body.id_destination, partitionKey)
+      .replace(destination)
+    return replaced_destination
+  }
+
   /*async updateItem(itemId) {
     debug('Update an item in the database')
     const doc = await this.getItem(itemId)
@@ -124,7 +193,7 @@ class TaskDao {
     return replaced
   }*/
 
-  async updateUser(itemId) {
+  /*async updateUser(itemId) {
     debug('Update a user in the database')
     const doc = await this.getUser(itemId)
     doc.completed = true
@@ -133,9 +202,9 @@ class TaskDao {
       .item(itemId, partitionKey)
       .replace(doc)
     return replaced
-  }
+  }*/
 
-  async updateWeapon(itemId) {
+  /*async updateWeapon(itemId) {
     debug('Update a weapon in the database')
     const doc = await this.getWeapon(itemId)
     doc.completed = true
@@ -144,7 +213,7 @@ class TaskDao {
       .item(itemId, partitionKey)
       .replace(doc)
     return replaced
-  }
+  }*/
 
   /*async getItem(itemId) {
     debug('Getting an item from the database')

@@ -51,6 +51,10 @@ const CosmosClient = require('@azure/cosmos').CosmosClient
    })
 
  app.get('/', (req, res, next) => taskList.showIndex(req, res).catch(next))
+ app.get('/auctioned', (req, res, next) => taskList.showAuctioned(req, res).catch(next))
+ app.post('/inventory', (req, res, next) => taskList.getInventory(req, res).catch(next))
+ app.post('/all', (req, res, next) => taskList.getAll(req, res).catch(next))
+
  //app.get('/all', (req, res, next) => taskList.getAll(req, res).catch(next))
  app.post('/user', (req, res, next) => taskList.getUser(req, res).catch(next))
  app.post('/weapon', (req, res, next) => taskList.getWeapon(req, res).catch(next))
@@ -59,6 +63,9 @@ const CosmosClient = require('@azure/cosmos').CosmosClient
  app.post('/adduser', (req, res, next) => taskList.addUser(req, res).catch(next))
  app.post('/addweapon', (req, res, next) => taskList.addWeapon(req, res).catch(next))
  app.post('/addinventory', (req, res, next) => taskList.addInventory(req, res).catch(next))
+ app.post('/addcoin', (req, res, next) => taskList.addCoin(req, res).catch(next))
+ app.post('/updateweapon', (req, res, next) => taskList.updateWeapon(req, res).catch(next))
+ app.post('/switchweapon', (req, res, next) => taskList.switchWeapon(req, res).catch(next))
  //app.post('/addtask', (req, res, next) => taskList.postTask(req, res).catch(next))
  /*app.post('/completetask', (req, res, next) =>
    taskList.completeTask(req, res).catch(next)

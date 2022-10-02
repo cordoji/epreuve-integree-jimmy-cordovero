@@ -27,6 +27,21 @@ const TaskDao = require("../models/TaskDao");
      });
    }*/
 
+   async showAuctioned(req, res) {
+    const querySpec = {
+      query: "SELECT * FROM root r WHERE r.location=@location",
+      parameters: [
+        {
+          name: "@location",
+          value: "auction_house"
+        }
+      ]
+    };
+
+    const items = await this.taskDao.findAuctioned(querySpec);
+    res.send(items);
+  }
+
    async showIndex(req, res) {
     const querySpec = {
       query: "SELECT * FROM root r WHERE r.completed=@completed",
@@ -64,6 +79,25 @@ const TaskDao = require("../models/TaskDao");
     res.send(items);
    }*/
 
+   async getAll(req, res){
+    const querySpec = {
+      query: "SELECT * FROM root r WHERE r.owner=@owner AND r.location!=@location" ,
+      parameters: [
+        {
+          name: "@owner",
+          value: req.body.owner_username
+        },
+        {
+          name: "@location",
+          value: "auction_house"
+        }
+      ]
+    };
+
+    const items = await this.taskDao.findAll(querySpec);
+    res.send(items);
+   }
+
    async getUser(req, res){
     const querySpec = {
       query: "SELECT * FROM root r WHERE r.username=@username" ,
@@ -77,6 +111,21 @@ const TaskDao = require("../models/TaskDao");
 
     const items = await this.taskDao.findUser(querySpec);
     res.send(items[0]);
+   }
+
+   async getInventory(req, res){
+    const querySpec = {
+      query: "SELECT * FROM root r WHERE r.owner=@owner" ,
+      parameters: [
+        {
+          name: "@owner",
+          value: req.body.owner_username
+        }
+      ]
+    };
+
+    const items = await this.taskDao.findInventory(querySpec);
+    res.send(items);
    }
 
    async getWeapon(req, res){
@@ -154,6 +203,27 @@ const TaskDao = require("../models/TaskDao");
     await this.taskDao.addInventory(item);
     res.send(item);
    }
+
+   async addCoin(req, res) {
+    const item = req.body;
+
+    this.taskDao.updateCoin(item.id, item.coins);
+    res.send();
+  }
+
+  async updateWeapon(req, res) {
+    const item = req.body;
+
+    this.taskDao.updateWeapon(item);
+    res.send(item);
+  }
+
+  async switchWeapon(req, res) {
+    const item = req.body;
+
+    this.taskDao.switchWeapon(item);
+    res.send(item);
+  }
 
    /*async completeTask(req, res) {
      const completedTasks = Object.keys(req.body);
