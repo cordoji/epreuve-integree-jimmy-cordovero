@@ -6,7 +6,7 @@ var id
 
 var startPosition = Vector2(0,0)
 var velocity = Vector2(0,0)
-var coins = 1000
+var coins = 0
 const SPEED = 300
 const GRAVITY = 30
 const JUMPFORCE = -900
@@ -15,6 +15,7 @@ func _ready():
 	PlayerInventory.connect("active_weapon_updated", self, "refresh_displayed_weapon")
 	startPosition = self.position
 	id = "player"
+	refresh_displayed_weapon()
 
 func _physics_process(_delta):
 	
@@ -47,11 +48,8 @@ func _physics_process(_delta):
 	
 	if Input.is_action_pressed("shoot") and get_global_mouse_position().x < global_position.x:
 		$Sprites/AnimationPlayer.play("Shoot_left")
-	
-	
-	
+		
 	velocity = move_and_slide(velocity, Vector2.UP)
-	
 	velocity.x = lerp(velocity.x, 0, 0.1)
 	
 	if Input.is_action_pressed("shoot"):
@@ -114,7 +112,7 @@ func _on_Timer_timeout():
 	get_tree().change_scene("res://Scenes/GameOver.tscn")
 
 func refresh_displayed_weapon():
-	if PlayerInventory.equips.has(PlayerInventory.active_weapon_slot) != false:
+	if PlayerInventory.equips.has(int(PlayerInventory.active_weapon_slot)):
 		$Sprites/WeaponSprite.texture = load("res://Assets/Request pack (100 assets)/PNG/" + PlayerInventory.current_weapon.weapon_name + ".png")
 	else:
 		$Sprites/WeaponSprite.texture = null

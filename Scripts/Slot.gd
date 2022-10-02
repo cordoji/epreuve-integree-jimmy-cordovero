@@ -8,13 +8,13 @@ var default_style: StyleBoxTexture = null
 var empty_style: StyleBoxTexture = null
 var selected_style: StyleBoxTexture = null
 
-var WeaponClass = preload("res://Scenes/Weapon.tscn")
+var weapon_scene = preload("res://Scenes/Weapon.tscn")
 var weapon = null
 var slot_index
 var slotType = null
 
 enum SlotType {
-	WEAPON = 0,
+	EQUIPMENT = 0,
 	INVENTORY,
 }
 
@@ -36,7 +36,7 @@ func _ready():
 
 
 func refresh_style():
-	if SlotType.WEAPON == slotType and PlayerInventory.active_weapon_slot == slot_index:
+	if SlotType.EQUIPMENT == slotType and PlayerInventory.active_weapon_slot == slot_index:
 		set("custom_styles/panel", selected_style)
 	elif weapon == null:
 		set("custom_styles/panel", empty_style)

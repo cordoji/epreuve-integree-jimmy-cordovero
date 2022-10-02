@@ -14,27 +14,30 @@ var active_weapon_slot = 0
 var current_weapon
 var previous_weapon
 
-func add_weapon(weapon: WeaponClass):
+func give_index(weapon : WeaponClass):
 	for i in range(NUM_INVENTORY_SLOTS):
 		if inventory.has(i) == false:
-			inventory[i] = [weapon]
 			weapon.index = i
+			inventory[i] = "placeholder"
 			return
+
+func add_weapon(weapon: WeaponClass, index):
+	inventory[index] = [weapon]
 
 func remove_weapon(slot: SlotClass):
 	match slot.slotType:
 		SlotClass.SlotType.INVENTORY:
 			inventory.erase(slot.slot_index)
-		SlotClass.SlotType.WEAPON:
+		SlotClass.SlotType.EQUIPMENT:
 			equips.erase(slot.slot_index)
 
 func add_weapon_to_empty_slot(weapon: WeaponClass, slot: SlotClass):
 	match slot.slotType:
 		SlotClass.SlotType.INVENTORY:
 			inventory[slot.slot_index] = [weapon]
-			if active_weapon_slot == slot.slot_index:
+			if slot.slot_index == active_weapon_slot:
 				emit_signal("active_weapon_updated")
-		SlotClass.SlotType.WEAPON:
+		SlotClass.SlotType.EQUIPMENT:
 			equips[slot.slot_index] = [weapon]
 			if active_weapon_slot == slot.slot_index:
 				current_weapon = weapon

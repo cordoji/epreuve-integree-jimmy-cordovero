@@ -22,3 +22,5 @@ visible = false
 [node name="CurrentScene" type="Node2D" parent="."]
 
 [node name="Login" parent="." instance=ExtResource( 5 )]
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]

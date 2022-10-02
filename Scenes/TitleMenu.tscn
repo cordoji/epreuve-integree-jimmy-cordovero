@@ -48,6 +48,10 @@ text = "Play"
 flat = true
 script = ExtResource( 2 )
 
+[node name="Timer" type="Timer" parent="PlayButton"]
+wait_time = 2.0
+one_shot = true
+
 [node name="TitleScreenMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 volume_db = -12.0
@@ -65,3 +69,4 @@ text = "Settings"
 flat = true
 
 [connection signal="pressed" from="PlayButton" to="PlayButton" method="_on_PlayButton_pressed"]
+[connection signal="timeout" from="PlayButton/Timer" to="PlayButton" method="_on_Timer_timeout"]

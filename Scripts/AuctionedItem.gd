@@ -15,7 +15,8 @@ func refresh():
 
 func _on_Buy_pressed():
 	if get_tree().root.get_node("Master/CurrentScene/Base/HUD").coins > price:
-		PlayerInventory.add_weapon(weapon_on_auction)
+		PlayerInventory.give_index(weapon_on_auction)
+		PlayerInventory.add_weapon(weapon_on_auction, weapon_on_auction.index)
 		print(PlayerInventory.inventory)
 		get_tree().root.get_node("Master/UserInterface/AuctionHouse").initialize_sellables()
 		get_tree().root.get_node("Master/CurrentScene/Base/HUD").coins -= price

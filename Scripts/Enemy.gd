@@ -48,6 +48,7 @@ func stop_collisions():
 
 func _spawn_item():
 	var weapon = weapon_scene.instance()
+	weapon.instantiate()
 	weapon.set_collision_layer_bit(0, false)
 	weapon.set_collision_mask_bit(0, false)
 	weapon.position = position

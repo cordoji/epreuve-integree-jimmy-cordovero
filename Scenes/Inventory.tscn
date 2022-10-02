@@ -622,3 +622,5 @@ margin_bottom = 366.0
 rect_min_size = Vector2( 70, 70 )
 custom_styles/panel = SubResource( 3 )
 script = ExtResource( 3 )
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
