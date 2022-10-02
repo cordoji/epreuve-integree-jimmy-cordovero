@@ -41,6 +41,7 @@ func _make_get_request(url, method, use_ssl):
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 	var weapon
+	var prices = []
 	for i in range (json.result.size()):
 		weapon = weapon_scene.instance()
 		weapon.init_weapon(json.result[i].id, json.result[i].name, json.result[i].damage, json.result[i].rof)
@@ -52,16 +53,17 @@ func _on_request_completed(result, response_code, headers, body):
 				if (int(json.result[i].index) == 0):
 					PlayerInventory.current_weapon = weapon
 			"auction_house":
-				$UserInterface/AuctionHouse.sellList[int(json.result[i].index)] = [weapon]
+				$UserInterface/AuctionHouse.sellList[$UserInterface/AuctionHouse.sellList.size()] = [weapon, json.result[i].price, json.result[i].owner, json.result[i].ownerid]
 	$UserInterface/Inventory.initialize_equips()
+	$UserInterface/AuctionHouse.initialize_auction_house()
+#	print($UserInterface/AuctionHouse.sellList)
 	if(!all_initiated):
 		all_initiated = true
 		init_auction_house()
-		
 
 func add_coin():
 	coins += 1
-	emit_signal("coin_collected")
+	emit_signal("coin_collected", int(coins) + 1)
 #func provide_level(nl):
 #	match(nl):
 #		"base_scene":

@@ -68,11 +68,23 @@ func item_in_slot_auctioned(slot):
 	delete_children(slot)
 	slot.refresh_style()
 
+func initialize_auction_house():
+	var item
+	for i in range(sellList.size()):
+		item = auctioned_item_scene.instance()
+		item.description = description(sellList[i][0])
+		item.price = sellList[i][1]
+		item.weapon_on_auction = sellList[i][0]
+		item.seller = sellList[i][2]
+		item.sellerid = sellList[i][3]
+		item.refresh()
+		$TabContainer/Buy/ScrollContainer/VBoxContainer.add_child(item)
+
 func create_auction_line(weapon):
 	var item = auctioned_item_scene.instance()
 	item.description = $SellWindow.dialog_text
 	item.price = $SellWindow.price
 	item.weapon_on_auction = weapon
-	item.seller = get_tree().root.get_node("Master/CurrentScene/Base/Player").id
+	item.seller = get_tree().root.get_node("Master").username
 	item.refresh()
 	$TabContainer/Buy/ScrollContainer/VBoxContainer.add_child(item)

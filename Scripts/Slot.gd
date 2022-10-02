@@ -60,10 +60,18 @@ func putIntoSlot(new_weapon):
 
 func initialize_weapon(w):
 	if weapon == null:
-		weapon = w
-		weapon.position = Vector2(0,0)
-		add_child(weapon)
-		weapon.set_weapon(w)
+		if not_placeholder(slotType):
+			weapon = w
+			weapon.position = Vector2(0,0)
+			add_child(weapon)
+			weapon.set_weapon(w)
 	else:
 		weapon.set_weapon(w)
 	refresh_style()
+
+func not_placeholder(slotType):
+	match slotType:
+		SlotType.EQUIPMENT:
+			return !PlayerInventory.equips[int(slot_index)] is String
+		SlotType.INVENTORY:
+			return !PlayerInventory.inventory[int(slot_index)] is String

@@ -30,10 +30,11 @@ func refresh_style():
 
 func initialize_weapon(w):
 	if weapon == null:
-		weapon = w
-		weapon.position = Vector2(0,0)
-		add_child(weapon)
-		weapon.set_weapon(w)
+		if !PlayerInventory.inventory[int(slot_index)] is String:
+			weapon = w
+			weapon.position = Vector2(0,0)
+			add_child(weapon)
+			weapon.set_weapon(w)
 	else:
 		weapon.set_weapon(w)
 	refresh_style()

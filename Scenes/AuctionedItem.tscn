@@ -110,4 +110,6 @@ margin_bottom = 58.0
 window_title = "Alerte !"
 dialog_text = "Not enough funds"
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="Line/Buy" to="." method="_on_Buy_pressed"]

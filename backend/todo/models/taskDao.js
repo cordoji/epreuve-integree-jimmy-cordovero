@@ -182,6 +182,45 @@ class TaskDao {
     return replaced_destination
   }
 
+  async auctionWeapon(body) {
+    debug('auction a weapon in the database')
+    const doc = await this.getWeapon(body.id)
+    doc.price = body.price
+    doc.location = body.location
+    doc.ownerid = body.ownerid
+
+    const { resource: replaced } = await this.weaponContainer
+      .item(body.id, partitionKey)
+      .replace(doc)
+    return replaced
+  }
+
+  async sellWeapon(body) {
+    debug('auction a weapon in the database')
+    const weapon = await this.getWeapon(body.weaponid)
+    const buyer = await this.getUser(body.buyerid)
+    const seller = await this.getUser(body.sellerid)
+    weapon.owner = body.owner_username
+    weapon.location = "inventory"
+    weapon.index = body.index
+    if(body.buyerid != body.sellerid){
+      buyer.coins -= body.price
+      seller.coins += body.price
+    }
+    
+    const { resource: replacedweapon } = await this.weaponContainer
+      .item(body.weaponid, partitionKey)
+      .replace(weapon)
+    const { resource: replacedbuyer } = await this.userContainer
+      .item(body.buyerid, partitionKey)
+      .replace(buyer)
+    const { resource: replacedseller } = await this.userContainer
+      .item(body.sellerid, partitionKey)
+      .replace(seller)
+      
+    return replacedbuyer
+  }
+
   /*async updateItem(itemId) {
     debug('Update an item in the database')
     const doc = await this.getItem(itemId)

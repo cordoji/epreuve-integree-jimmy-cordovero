@@ -225,6 +225,20 @@ const TaskDao = require("../models/TaskDao");
     res.send(item);
   }
 
+  async auctionWeapon(req, res) {
+    const item = req.body;
+
+    this.taskDao.auctionWeapon(item);
+    res.send(item);
+  }
+
+  async sellWeapon(req, res) {
+    const item = req.body;
+
+    const buyer = await this.taskDao.sellWeapon(item);
+    res.send(buyer);
+  }
+
    /*async completeTask(req, res) {
      const completedTasks = Object.keys(req.body);
      const tasks = [];
