@@ -88,3 +88,14 @@ func create_auction_line(weapon):
 	item.seller = get_tree().root.get_node("Master").username
 	item.refresh()
 	$TabContainer/Buy/ScrollContainer/VBoxContainer.add_child(item)
+
+func empty_auction_house():
+	sellList.clear()
+	delete_children($TabContainer/Buy/ScrollContainer/VBoxContainer)
+
+func refresh():
+	empty_auction_house()
+	get_tree().root.get_node("Master").init_auction_house()
+
+func _on_Refresh_pressed():
+	refresh()

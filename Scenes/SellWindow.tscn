@@ -52,5 +52,7 @@ position = Vector2( 125, 11 )
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 2 )
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="confirmed" from="." to="." method="_on_SellWindow_confirmed"]
 [connection signal="gui_input" from="VBoxContainer/HBoxContainer2/SpinBox" to="." method="_on_SpinBox_gui_input"]

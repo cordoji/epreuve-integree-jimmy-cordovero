@@ -218,7 +218,7 @@ class TaskDao {
       .item(body.sellerid, partitionKey)
       .replace(seller)
       
-    return replacedbuyer
+    return weapon
   }
 
   /*async updateItem(itemId) {

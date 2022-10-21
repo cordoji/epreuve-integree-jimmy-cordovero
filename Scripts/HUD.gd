@@ -17,7 +17,7 @@ func refresh():
 #	pass
 
 func _on_coin_collected(c):
-	coins = int(c)
+	coins = c
 	refresh()
 #	if coins == 10000:
 #		get_tree().change_scene("res://Scenes/GameWon.tscn")

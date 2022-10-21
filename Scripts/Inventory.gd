@@ -18,9 +18,6 @@ var location_destination
 
 func _ready():
 	$HTTPRequest.connect("request_completed", self, "_on_request_completed")
-#
-#	var data_to_send = { "owner_username" : get_tree().root.get_node("Master").username }
-#	_make_post_request(url, "inventory", data_to_send, true)
 	
 	var inv_slots = inventory_slots.get_children()
 	for i in range (inv_slots.size()):

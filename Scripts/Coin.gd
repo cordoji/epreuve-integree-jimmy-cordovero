@@ -17,8 +17,8 @@ func _on_Coin_body_entered(body):
 		set_collision_layer_bit(0, true)
 		$AnimationPlayer.play("Bounce")
 		get_tree().root.get_node("Master").add_coin()
-		var data_to_send = { "id" : get_tree().root.get_node("Master").userid, "coins" : get_tree().root.get_node("Master").coins}
-		_make_post_request(url, "addcoin", data_to_send, true)
+#		var data_to_send = { "id" : get_tree().root.get_node("Master").userid, "coins" : get_tree().root.get_node("Master").coins}
+#		_make_post_request(url, "addcoin", data_to_send, true)
 	#	emit_signal("coin_collected")
 		$SoundCoinCollect.play()
 	

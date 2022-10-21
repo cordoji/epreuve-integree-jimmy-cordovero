@@ -9,13 +9,14 @@ var velocity = Vector2(0,0)
 var coins = 0
 const SPEED = 300
 const GRAVITY = 30
-const JUMPFORCE = -900
+const JUMPFORCE = -1200
 
 func _ready():
 	PlayerInventory.connect("active_weapon_updated", self, "refresh_displayed_weapon")
 	startPosition = self.position
 	id = "player"
 	refresh_displayed_weapon()
+	get_tree().root.get_node("Master/Timer").start()
 
 func _physics_process(_delta):
 	
@@ -57,8 +58,7 @@ func _physics_process(_delta):
 
 func shoot():
 	var origin = Vector2(self.global_position.x + 15, self.global_position.y + 15)
-	if PlayerInventory.equips.has(PlayerInventory.active_weapon_slot) != false:
-#		print("self.get_children()")
+	if PlayerInventory.equips.has(PlayerInventory.active_weapon_slot):
 		PlayerInventory.current_weapon.fire(Vector2(origin.x + 20, origin.y +10), get_global_mouse_position())
 	else:
 		throw_rock(origin, get_global_mouse_position())
@@ -73,7 +73,7 @@ func throw_rock(origin, direction):
 func rock_stats(projectile):
 	projectile.SPEED = projectile.SPEED / 4
 	projectile.GRAVITY = 15
-	projectile.damage = 300
+	projectile.damage = 30
 
 func rock_in_scene(projectile, origin, direction):
 	projectile.get_node("Sound").stream = null

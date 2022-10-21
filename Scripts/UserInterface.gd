@@ -15,10 +15,15 @@ func _input(event):
 		$AuctionHouse.visible = !$AuctionHouse.visible
 		$Inventory.reset_inventory()
 		$AuctionHouse.initialize_sellables()
+		$AuctionHouse.refresh()
 		get_tree().paused = !get_tree().paused
 	
 	if event.is_action_pressed("ui_cancel") and $Inventory.visible == true:
 		$Inventory.visible = !$Inventory.visible
+		get_tree().paused = !get_tree().paused
+		
+	if event.is_action_pressed("ui_cancel") and $AuctionHouse.visible == true:
+		$AuctionHouse.visible = !$AuctionHouse.visible
 		get_tree().paused = !get_tree().paused
 	
 	if event.is_action_pressed("scroll_up"):

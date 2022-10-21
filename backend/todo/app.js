@@ -59,7 +59,6 @@ const CosmosClient = require('@azure/cosmos').CosmosClient
  app.post('/user', (req, res, next) => taskList.getUser(req, res).catch(next))
  app.post('/weapon', (req, res, next) => taskList.getWeapon(req, res).catch(next))
  app.post('/login', (req, res, next) => taskList.getLogin(req, res).catch(next))
- //app.post('/addtask', (req, res, next) => taskList.addTask(req, res).catch(next))
  app.post('/adduser', (req, res, next) => taskList.addUser(req, res).catch(next))
  app.post('/addweapon', (req, res, next) => taskList.addWeapon(req, res).catch(next))
  app.post('/addinventory', (req, res, next) => taskList.addInventory(req, res).catch(next))

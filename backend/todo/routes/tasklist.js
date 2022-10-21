@@ -1,4 +1,5 @@
 const TaskDao = require("../models/TaskDao");
+const bcrypt = require("bcrypt");
 
  class TaskList {
    /**
@@ -53,7 +54,7 @@ const TaskDao = require("../models/TaskDao");
       ]
     };
 
-    const items = await this.taskDao.find(querySpec);
+    const items = await this.taskDao.findAll(querySpec);
     res.render("index", {
       title: "Contralands",
       tasks: items
@@ -145,21 +146,20 @@ const TaskDao = require("../models/TaskDao");
 
    async getLogin(req, res){
     const querySpec = {
-      query: "SELECT * FROM root r WHERE r.username=@username and r.password=@password" ,
+      query: "SELECT * FROM root r WHERE r.username=@username" ,
       parameters: [
         {
           name: "@username",
           value: req.body.username
-        },
-        {
-          name: "@password",
-          value: req.body.password
         }
       ]
     };
 
     const items = await this.taskDao.findUser(querySpec);
-    res.send(items[0]);
+    if(await this.comparePassword(req.body.password, items[0].password))
+      res.send(items[0]);
+    else
+      res.send()
    }
 
    /*async addTask(req, res) {
@@ -180,7 +180,9 @@ const TaskDao = require("../models/TaskDao");
       ]
     };
 
+    req.body.password = await this.hashPassword(req.body.password);
     const item = req.body;
+    
     const user = await this.taskDao.findUser(querySpec);
     if(Object.keys(user).length === 0){
       await this.taskDao.addUser(item);
@@ -188,6 +190,16 @@ const TaskDao = require("../models/TaskDao");
     }
     else
       res.send();
+   }
+
+   async hashPassword(plaintextPassword) {
+    const hash = await bcrypt.hash(plaintextPassword, 10);
+    return hash;
+   }
+
+   async comparePassword(plaintextPassword, hash) {
+    const result = await bcrypt.compare(plaintextPassword, hash);
+    return result;
    }
 
    async addWeapon(req, res) {
@@ -208,7 +220,7 @@ const TaskDao = require("../models/TaskDao");
     const item = req.body;
 
     this.taskDao.updateCoin(item.id, item.coins);
-    res.send();
+    res.send(item);
   }
 
   async updateWeapon(req, res) {
@@ -233,10 +245,31 @@ const TaskDao = require("../models/TaskDao");
   }
 
   async sellWeapon(req, res) {
+    const querySpec = {
+      query: "SELECT * FROM root r WHERE r.id=@weaponid AND r.location=@location" ,
+      parameters: [
+        {
+          name: "@weaponid",
+          value: req.body.weaponid
+        },
+        {
+          name: "@location",
+          value: "auction_house"
+        }
+      ]
+    };
+
     const item = req.body;
 
-    const buyer = await this.taskDao.sellWeapon(item);
-    res.send(buyer);
+    const weapon = await this.taskDao.findWeapon(querySpec)
+    if(Object.keys(weapon).length === 0){
+      res.send();
+    }
+    else{
+      const weaponSold = await this.taskDao.sellWeapon(item);
+      res.send(weaponSold);
+    }
+      
   }
 
    /*async completeTask(req, res) {

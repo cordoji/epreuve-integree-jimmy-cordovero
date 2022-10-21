@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Assets/fonts/KiriFont.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Login.gd" type="Script" id=2]
 [ext_resource path="res://Assets/fonts/BalsamiqSans-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/fonts/Kenney Bold.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
@@ -12,8 +13,16 @@ font_data = ExtResource( 1 )
 [sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 3 )
 
+[sub_resource type="DynamicFont" id=12]
+size = 11
+font_data = ExtResource( 4 )
+
 [sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=11]
+size = 11
+font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=8]
 font_data = ExtResource( 3 )
@@ -64,9 +73,9 @@ margin_bottom = 40.0
 
 [node name="UserNameC" type="LineEdit" parent="ConfirmGroup"]
 margin_left = 448.0
-margin_top = 320.0
+margin_top = 288.0
 margin_right = 608.0
-margin_bottom = 344.0
+margin_bottom = 312.0
 
 [node name="Label" type="Label" parent="ConfirmGroup/UserNameC"]
 margin_left = -96.0
@@ -75,11 +84,19 @@ margin_bottom = 14.0
 custom_fonts/font = SubResource( 6 )
 text = "Username :"
 
+[node name="Label2" type="Label" parent="ConfirmGroup/UserNameC"]
+margin_left = 192.0
+margin_right = 585.0
+margin_bottom = 39.0
+custom_fonts/font = SubResource( 12 )
+text = "Username must contain between 6 and 12
+alphanumercial characters"
+
 [node name="PasswordC" type="LineEdit" parent="ConfirmGroup"]
 margin_left = 448.0
-margin_top = 352.0
+margin_top = 320.0
 margin_right = 608.0
-margin_bottom = 376.0
+margin_bottom = 344.0
 secret = true
 
 [node name="Label" type="Label" parent="ConfirmGroup/PasswordC"]
@@ -89,17 +106,35 @@ margin_bottom = 14.0
 custom_fonts/font = SubResource( 7 )
 text = "Password :"
 
+[node name="Label2" type="Label" parent="ConfirmGroup/PasswordC"]
+margin_left = 192.0
+margin_top = 15.0
+margin_right = 558.0
+margin_bottom = 92.0
+custom_fonts/font = SubResource( 11 )
+text = "Password must contain minimum 
+8 characters, maximum 12 characters,
+ at least one letter, one number 
+and one special character "
+
+[node name="Label" type="Label" parent="ConfirmGroup/PasswordC/Label2"]
+margin_left = 256.0
+margin_top = 64.0
+margin_right = 325.0
+margin_bottom = 78.0
+text = "(@$!%*#?&)"
+
 [node name="PwConfirm" type="LineEdit" parent="ConfirmGroup"]
 margin_left = 448.0
-margin_top = 384.0
+margin_top = 352.0
 margin_right = 608.0
-margin_bottom = 408.0
+margin_bottom = 376.0
 secret = true
 
 [node name="Label" type="Label" parent="ConfirmGroup/PwConfirm"]
 margin_left = -96.0
-margin_right = -56.0
-margin_bottom = 14.0
+margin_right = -7.0
+margin_bottom = 20.0
 custom_fonts/font = SubResource( 8 )
 text = "Repeat PW :"
 

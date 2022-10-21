@@ -2,7 +2,7 @@ const config = {};
 
 config.host = process.env.HOST || "https://contralands.documents.azure.com:443/";
 config.authKey =
-  process.env.AUTH_KEY || 
+  process.env.AUTH_KEY || ;
 config.databaseId = "Contralands";
 config.containerUserId = "Users";
 config.containerWeaponId = "Weapons"

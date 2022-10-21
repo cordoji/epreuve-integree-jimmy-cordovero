@@ -5,19 +5,23 @@ var headers = ["Content-Type: application/json"]
 
 var projectile_scene = preload("res://Scenes/Projectile.tscn")
 
-var weapon_name
+var rng = RandomNumberGenerator.new()
+
 var weapons_array = ["raygun", "raygunBig", "raygunPurple", "raygunPurpleBig"]
 
+var weapon_name
 var damage_modifier
 var fire_rate
+
 var weaponid
 var index
 var owner_username
+
 var to_inventory = false
 var instantiated = false
 var pickable = false
 
-var rng = RandomNumberGenerator.new()
+
 
 func _ready():
 	owner_username = get_tree().root.get_node("Master").username
@@ -26,10 +30,10 @@ func _ready():
 func instantiate():
 	pickable = true
 	rng.randomize()
-	var number = rng.randi_range(0, weapons_array.size() - 1)
-	weapon_name = weapons_array[number]
-	damage_modifier = number + 1
-	fire_rate = (number + 1)/2.0
+	var random_number = rng.randi_range(0, weapons_array.size() - 1)
+	weapon_name = weapons_array[random_number]
+	damage_modifier = random_number + 1
+	fire_rate = (random_number + 1)/2.0
 	$Sprite.texture = load("res://Assets/Request pack (100 assets)/PNG/" + weapon_name + ".png")
 	$TextureRect.texture = load("res://Assets/Request pack (100 assets)/PNG/" + weapon_name + ".png")
 	instantiated = true
@@ -61,15 +65,22 @@ func projectile_in_scene(projectile, origin, direction):
 	projectile.rotation = projectile_rotation
 
 func _on_Weapon_body_entered(_body):
-	if (pickable):
+	if pickable:
 		pickable = false
 #		self.visible = true
 		PlayerInventory.give_index(self)
-		var data_weapon = { "name" : weapon_name, "damage" : damage_modifier, "rof" : fire_rate, "owner" : owner_username, "location" : "inventory", "index" : index }
-		_make_post_request(url, "addweapon", data_weapon, true)
+		
 		set_collision_layer_bit(3, false)
 		set_collision_mask_bit(0, false)
 		$AnimationPlayer.play("Bounce")
+		
+		var data_weapon = { "name" : weapon_name, 
+							"damage" : damage_modifier, 
+							"rof" : fire_rate, 
+							"owner" : owner_username, 
+							"location" : "inventory", 
+							"index" : index }
+		_make_post_request(url, "addweapon", data_weapon, true)
 
 func _spawn():
 	get_node("TextureRect").visible = false
@@ -79,8 +90,6 @@ func _spawn():
 #	set_collision_mask_bit(0, true)
 
 func _on_AnimationPlayer_animation_finished(_anim_name):
-#	set_collision_layer_bit(3, false)
-#	set_collision_mask_bit(0, false)
 	self.visible = false
 
 func set_weapon(w):
