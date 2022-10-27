@@ -63,3 +63,6 @@ func update_active_weapon():
 		current_weapon = equips[active_weapon_slot][0]
 	else:
 		current_weapon = null
+
+func is_full():
+	return inventory.size() == NUM_INVENTORY_SLOTS

@@ -11,13 +11,26 @@ func _ready():
 	regex_pwd.compile("(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,12}")
 	regex_user.compile("(?=.*[A-Za-z])(?=.*\\d)|[A-Za-z\\d]{6,12}")
 
+func _process(delta):
+	if Input.is_action_just_pressed("start") and !$Popup.visible:
+		if $LoginForm.visible:
+			_on_LoginB_pressed()
+		if $ConfirmGroup.visible:
+			_on_Confirm_pressed()
+	
+	if Input.is_action_just_pressed("ui_cancel"):
+		_on_Cancel_pressed()
+		_on_CancelB_pressed()
+
 func _on_SignIn_pressed():
 	$Buttons.visible = false
 	$LoginForm.visible = true
+	$LoginForm/UserName.grab_focus()
 
 func _on_Register_pressed():
 	$Buttons.visible = false
 	$ConfirmGroup.visible = true
+	$ConfirmGroup/UserNameC.grab_focus()
 
 func _on_Cancel_pressed():
 	$Buttons.visible = true

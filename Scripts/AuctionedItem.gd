@@ -18,6 +18,11 @@ func refresh():
 	$Line/Weapon/Description.text = description
 
 func _on_Buy_pressed():
+	if PlayerInventory.is_full():
+		$AcceptDialog.dialog_text = "No room in inventory"
+		$AcceptDialog.popup_centered()
+		return
+
 	if get_tree().root.get_node("Master").coins >= price:
 		$Line/Buy.disabled = true
 		$Line/Buy.text = "Processing"

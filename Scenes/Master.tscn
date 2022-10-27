@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Master.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Master.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Inventory.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/UserInterface.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/AuctionHouse.tscn" type="PackedScene" id=4]
@@ -26,11 +26,13 @@ pause_mode = 1
 [node name="Login" parent="." instance=ExtResource( 5 )]
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
+pause_mode = 2
 
 [node name="Timer" type="Timer" parent="."]
 pause_mode = 2
 wait_time = 10.0
 
 [node name="RefreshCoins" type="HTTPRequest" parent="."]
+pause_mode = 2
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

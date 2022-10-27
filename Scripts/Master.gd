@@ -24,10 +24,10 @@ func _ready():
 	$RefreshCoins.connect("request_completed", self, "_refresh_coins")
 	var titleMenu = titleMenu_scene.instance()
 	current_scene = titleMenu
-	get_tree().root.get_node("Master/CurrentScene").call_deferred("add_child", titleMenu)
+	$CurrentScene.call_deferred("add_child", titleMenu)
 
 func init_all():
-	var data_to_send = { "owner_username" : get_tree().root.get_node("Master").username }
+	var data_to_send = { "owner_username" : username }
 	_make_post_request(url, "all", data_to_send, true)
 
 func init_auction_house():

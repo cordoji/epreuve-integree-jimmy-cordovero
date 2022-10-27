@@ -65,7 +65,7 @@ func projectile_in_scene(projectile, origin, direction):
 	projectile.rotation = projectile_rotation
 
 func _on_Weapon_body_entered(_body):
-	if pickable:
+	if pickable and !PlayerInventory.is_full():
 		pickable = false
 #		self.visible = true
 		PlayerInventory.give_index(self)
@@ -73,14 +73,6 @@ func _on_Weapon_body_entered(_body):
 		set_collision_layer_bit(3, false)
 		set_collision_mask_bit(0, false)
 		$AnimationPlayer.play("Bounce")
-		
-		var data_weapon = { "name" : weapon_name, 
-							"damage" : damage_modifier, 
-							"rof" : fire_rate, 
-							"owner" : owner_username, 
-							"location" : "inventory", 
-							"index" : index }
-		_make_post_request(url, "addweapon", data_weapon, true)
 
 func _spawn():
 	get_node("TextureRect").visible = false
@@ -91,6 +83,13 @@ func _spawn():
 
 func _on_AnimationPlayer_animation_finished(_anim_name):
 	self.visible = false
+	var data_weapon = { "name" : weapon_name, 
+							"damage" : damage_modifier, 
+							"rof" : fire_rate, 
+							"owner" : owner_username, 
+							"location" : "inventory", 
+							"index" : index }
+	_make_post_request(url, "addweapon", data_weapon, true)
 
 func set_weapon(w):
 	$TextureRect.texture = load("res://Assets/Request pack (100 assets)/PNG/" +  w.weapon_name + ".png")
