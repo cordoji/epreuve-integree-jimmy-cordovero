@@ -45,7 +45,7 @@ texture = ExtResource( 3 )
 [node name="Portal" parent="." instance=ExtResource( 5 )]
 position = Vector2( 640, -96 )
 z_index = -1
-target_scene = "level1_scene"
+target_scene = "world_generator_scene"
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

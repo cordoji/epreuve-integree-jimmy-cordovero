@@ -6,6 +6,7 @@ var titleMenu_scene = preload("res://Scenes/TitleMenu.tscn")
 var level1_scene = preload("res://Scenes/Level1.tscn")
 var base_scene = preload("res://Scenes/Base.tscn")
 var weapon_scene = preload("res://Scenes/Weapon.tscn")
+var world_generator_scene = preload("res://Scenes/World_generator.tscn")
 
 var url = "https://contralands.azurewebsites.net/"
 var headers = ["Content-Type: application/json"]

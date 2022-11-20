@@ -63,6 +63,8 @@ func provide_level():
 			next_scene = get_tree().root.get_node("Master").base_scene.instance()
 		"level1_scene":
 			next_scene = get_tree().root.get_node("Master").level1_scene.instance()
+		"world_generator_scene":
+			next_scene = get_tree().root.get_node("Master").world_generator_scene.instance()
 		_:
 			print("no scene")
 		
