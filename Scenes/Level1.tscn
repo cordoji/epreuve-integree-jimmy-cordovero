@@ -150,7 +150,7 @@ texture = ExtResource( 4 )
 centered = false
 
 [node name="Far Blocks" type="ParallaxLayer" parent="ParallaxBackground"]
-modulate = Color( 0.964706, 0.552941, 0.552941, 1 )
+modulate = Color( 0.960784, 0.54902, 0.54902, 1 )
 motion_scale = Vector2( 0.2, 0.2 )
 motion_mirroring = Vector2( 3200, 2400 )
 
@@ -226,7 +226,6 @@ position = Vector2( 3032, 319 )
 pause_mode = 2
 stream = ExtResource( 11 )
 volume_db = -12.0
-autoplay = true
 
 [node name="Keys" type="Node2D" parent="."]
 light_mask = 0

@@ -55,7 +55,6 @@ one_shot = true
 [node name="TitleScreenMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 volume_db = -12.0
-autoplay = true
 
 [node name="SettingsButton" type="Button" parent="."]
 visible = false

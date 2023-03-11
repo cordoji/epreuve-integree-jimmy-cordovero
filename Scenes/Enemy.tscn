@@ -38,8 +38,7 @@ shape = SubResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
-animation = "Walk"
-frame = 1
+animation = "Killed"
 playing = true
 
 [node name="FloorChecker" type="RayCast2D" parent="."]

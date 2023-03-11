@@ -18,7 +18,7 @@ var index
 var owner_username
 
 var to_inventory = false
-var instantiated = false
+#var instantiated = false
 var pickable = false
 
 
@@ -28,7 +28,14 @@ func _ready():
 	$HTTPRequest.connect("request_completed", self, "_on_request_completed")
 
 func instantiate():
-	pickable = true
+	make_pickable()
+	create_weapon()
+	#instantiated = true
+
+func make_pickable():
+	pickable = true;
+
+func create_weapon():
 	rng.randomize()
 	var random_number = rng.randi_range(0, weapons_array.size() - 1)
 	weapon_name = weapons_array[random_number]
@@ -36,7 +43,6 @@ func instantiate():
 	fire_rate = (random_number + 1)/2.0
 	$Sprite.texture = load("res://Assets/Request pack (100 assets)/PNG/" + weapon_name + ".png")
 	$TextureRect.texture = load("res://Assets/Request pack (100 assets)/PNG/" + weapon_name + ".png")
-	instantiated = true
 
 func init_weapon(wid, wname, damage, rof):
 	weaponid = wid

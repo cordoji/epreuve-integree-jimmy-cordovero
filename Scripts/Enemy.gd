@@ -11,15 +11,19 @@ onready var health = base_health
 var coin_scene = preload("res://Scenes/Coin.tscn")
 var weapon_scene = preload("res://Scenes/Weapon.tscn")
 #var spawned
-
+var weapon = weapon_scene.instance()
 
 func _ready():
+	$AnimatedSprite.play("Walk")
+	weapon.create_weapon()
+	
 	$HealthBar/ProgressBar.max_value = base_health
 	if direction == -1:
 		$AnimatedSprite.flip_h = true
 	$FloorChecker.position.x = $CollisionShape2D.shape.get_extents().x * direction
 	#if detects_cliffs:
 		#set_modulate(Color(1.2, 0.5, 1))
+	
 	
 func _physics_process(_delta):
 	
@@ -29,13 +33,11 @@ func _physics_process(_delta):
 		$FloorChecker.position.x = $CollisionShape2D.shape.get_extents().x * direction
 		
 	
-	
 	velocity.y += 20
 	
 	velocity.x = speed * direction
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
-	
 
 func stop_collisions():
 	set_collision_layer_bit(4, false)
@@ -47,13 +49,12 @@ func stop_collisions():
 	$HitBox.set_collision_mask_bit(5, false)
 
 func _spawn_item():
-	var weapon = weapon_scene.instance()
-	weapon.instantiate()
 	weapon.set_collision_layer_bit(0, false)
 	weapon.set_collision_mask_bit(0, false)
 	weapon.position = position
 #	get_tree().root.get_node("Master/CurrentScene/Level1/Enemies").call_deferred("add_child", weapon)
 	self.get_parent().call_deferred("add_child", weapon)
+	weapon.make_pickable()
 	
 	weapon._spawn()
 
@@ -93,4 +94,9 @@ func _on_Timer_timeout():
 	queue_free()
 	#spawned.set_collision_layer_bit(0, true)
 	#spawned.set_collision_mask_bit(0, true)
+
+func shoot():
+	var origin = Vector2(self.global_position.x + 15, self.global_position.y + 15)
+	if PlayerInventory.equips.has(PlayerInventory.active_weapon_slot):
+		PlayerInventory.current_weapon.fire(Vector2(origin.x + 20, origin.y +10), get_global_mouse_position())
 
